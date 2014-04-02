@@ -1,4 +1,4 @@
-<?= $Outils->banniere(); ?>
+<?= $Outils->banniere($include_file); ?>
 
     <h2>Descriptif d'un film</h2>
 

@@ -1,4 +1,4 @@
-    <h1>VideoEXPRESS <small>© Rémi Cadène</small></h1>
+    <h1>VideoExpress <small>© Rémi Cadène</small></h1>
 
     <div>
         <div>

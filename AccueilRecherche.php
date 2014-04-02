@@ -15,7 +15,7 @@ $acteurs = select($BD,'Acteur','ACTEURS');
 
 ?>
 
-<?= $Outils->banniere(); ?>
+<?= $Outils->banniere($include_file); ?>
 
     <h2>Recherche de films</h2>
 

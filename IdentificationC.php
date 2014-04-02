@@ -1,4 +1,4 @@
-<?php echo $Outils->banniere();?>
+<?php echo $Outils->banniere($include_file);?>
 
 <h2>Commande de cassettes</h2>
 

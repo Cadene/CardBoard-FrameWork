@@ -38,7 +38,7 @@ if(
 
 }
 ?>
-<?= $Outils->banniere();?>
+<?= $Outils->banniere($include_file);?>
 
     <h2>Films trouvés</h2>
 

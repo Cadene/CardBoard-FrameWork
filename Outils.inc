@@ -33,27 +33,50 @@ class Outils {
      *
      * @return string
      */
-    public function banniere($page='VideoExpress',$auteurs='Rémi Cadène'){
-        return '
-    <h1>'.$page.'<small>© '.$auteurs.'</small></h1>
+    public function banniere($current,$page='VideoExpress',$auteurs='Rémi Cadène'){
+        $s = '
+    <h1>'.$page.' <small>© '.$auteurs.'</small></h1>';
+        $s .= $this->menu($current);
+        return $s;
 
-    <div id="menu">
+    }
+
+    public function menu($current)
+    {
+        $s = '
+    <div id="menu">';
+        if($current != 'Accueil.php'){
+        $s .= '
         <div>
             <a href="Accueil.php">Accueil</a>
-        </div>
+        </div>';
+        }
+        if($current != 'AccueilDescriptif.php'){
+        $s .= '
         <div>
             <a href="AccueilDescriptif.php">Descriptif d\'un film</a>
-        </div>
+        </div>';
+        }
+        if($current != 'AccueilRecherche.php'){
+        $s .= '
         <div>
             <a href="AccueilRecherche.php">Recherche de films</a>
-        </div>
+        </div>';
+        }
+        if($current != 'IdentificationC.php'){
+        $s .= '
         <div>
             <a href="IdentificationC.php">Commande de cassettes</a>
-        </div>
-        <div>
+        </div>';
+        }
+        if($current != 'IdentificationD.php'){
+        $s .= '<div>
             <a href="IdentificationD.php">Liste des cassettes détenues</a>
-        </div>
+        </div>';
+        }
+        $s .= '
     </div>';
+        return $s;
     }
 
     public function admin_menu(){
