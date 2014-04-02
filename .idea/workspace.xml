@@ -8,8 +8,8 @@
     <file path="/AccueilDescriptif.php" changelist="fd432128-d91d-4120-9639-a2ddd9048a6e" time="1396468698098" ignored="false" />
     <file path="/Outils.inc" changelist="fd432128-d91d-4120-9639-a2ddd9048a6e" time="1396481875455" ignored="false" />
     <file path="/Dummy.txt" changelist="fd432128-d91d-4120-9639-a2ddd9048a6e" time="1396459482126" ignored="false" />
-    <file path="/index.php" changelist="fd432128-d91d-4120-9639-a2ddd9048a6e" time="1396475830555" ignored="false" />
-    <file path="/.htaccess" changelist="fd432128-d91d-4120-9639-a2ddd9048a6e" time="1396460725079" ignored="false" />
+    <file path="/index.php" changelist="fd432128-d91d-4120-9639-a2ddd9048a6e" time="1396482685695" ignored="false" />
+    <file path="/.htaccess" changelist="fd432128-d91d-4120-9639-a2ddd9048a6e" time="1396482570960" ignored="false" />
     <file path="/NotFound.php" changelist="fd432128-d91d-4120-9639-a2ddd9048a6e" time="1396461569149" ignored="false" />
     <file path="$PROJECT_DIR$/../../../../../Projets/Biskanah/Biskanah/www/lib/Cake/Controller/Controller.php" changelist="fd432128-d91d-4120-9639-a2ddd9048a6e" time="1396463017540" ignored="false" />
     <file path="/IdentificationC.php" changelist="fd432128-d91d-4120-9639-a2ddd9048a6e" time="1396466742536" ignored="false" />
@@ -39,15 +39,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="ConfirmeCommande.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ConfirmeCommande.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="CoreException.inc" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/CoreException.inc">
           <provider selected="true" editor-type-id="text-editor">
@@ -102,10 +93,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.php" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="index.php" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="72" column="16" selection-start="1519" selection-end="1532" vertical-scroll-proportion="-25.0">
+            <state line="32" column="9" selection-start="753" selection-end="753" vertical-scroll-proportion="0.45296168">
               <folding>
                 <element signature="e#6#59#0" expanded="true" />
               </folding>
@@ -136,10 +127,19 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Recherche.php" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="Recherche.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Recherche.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="42" column="26" selection-start="1163" selection-end="1163" vertical-scroll-proportion="0.73170733">
+            <state line="7" column="7" selection-start="220" selection-end="220" vertical-scroll-proportion="-4.375">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name=".htaccess" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/.htaccess">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="6" column="0" selection-start="165" selection-end="165" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -155,7 +155,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/.htaccess" />
         <option value="$PROJECT_DIR$/NotFound.php" />
         <option value="$PROJECT_DIR$/GESTION/index.php" />
         <option value="$PROJECT_DIR$/gestion/index.php" />
@@ -164,13 +163,14 @@
         <option value="$PROJECT_DIR$/BD.php" />
         <option value="$PROJECT_DIR$/CoreException.inc" />
         <option value="$PROJECT_DIR$/BD.inc" />
-        <option value="$PROJECT_DIR$/index.php" />
         <option value="$PROJECT_DIR$/Accueil.php" />
         <option value="$PROJECT_DIR$/AccueilDescriptif.php" />
         <option value="$PROJECT_DIR$/AccueilRecherche.php" />
         <option value="$PROJECT_DIR$/IdentificationC.php" />
         <option value="$PROJECT_DIR$/Outils.inc" />
         <option value="$PROJECT_DIR$/Recherche.php" />
+        <option value="$PROJECT_DIR$/.htaccess" />
+        <option value="$PROJECT_DIR$/index.php" />
       </list>
     </option>
   </component>
@@ -235,6 +235,20 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="sql" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="www" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="www" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="gestion" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -265,6 +279,9 @@
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/sql" />
     </key>
   </component>
   <component name="RunManager">
@@ -370,13 +387,6 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/NotFound.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="20" selection-start="20" selection-end="20" vertical-scroll-proportion="-0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/gestion/index.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="236" vertical-scroll-proportion="-0.0">
@@ -454,15 +464,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/index.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="72" column="16" selection-start="1519" selection-end="1532" vertical-scroll-proportion="-25.0">
-          <folding>
-            <element signature="e#6#59#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/IdentificationC.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="42" selection-start="42" selection-end="42" vertical-scroll-proportion="0.0">
@@ -493,8 +494,24 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Recherche.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="42" column="26" selection-start="1163" selection-end="1163" vertical-scroll-proportion="0.73170733">
+        <state line="7" column="7" selection-start="220" selection-end="220" vertical-scroll-proportion="-4.375">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.htaccess">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="6" column="0" selection-start="165" selection-end="165" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="32" column="9" selection-start="753" selection-end="753" vertical-scroll-proportion="0.45296168">
+          <folding>
+            <element signature="e#6#59#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
