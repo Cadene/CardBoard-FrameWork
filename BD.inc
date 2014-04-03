@@ -62,6 +62,22 @@ class BD {
     }
 
 
+    public function verifierAbonne($Nom, $Code){
+        // Récupération de l'abonné
+        $sql = 'SELECT ';
+        $sql .= 'a.Code, a.Nom, a.NbCassettes ';
+        $sql .= 'FROM ABONNES a ';
+        $sql .= 'WHERE a.Code = "'.$Code.'"';
+        $sql .= ' LIMIT 1';
+        $rslt = $this->exec($sql);
+        $abo = $this->fetch($rslt);
+        if(empty($abo)){
+            throw new CoreException(102,'Le Code n\'existe pas.');
+        }
+        if($abo['Nom'] != $Nom){
+            throw new CoreException(101,'Le Nom associé au Code n\'est pas le même.');
+        }
+    }
 
 
 }

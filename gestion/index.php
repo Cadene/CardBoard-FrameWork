@@ -1,3 +1,5 @@
+<?= $Outils->admin_banniere();?>
+
 <h2>Administration</h2>
 
 <form action="Menu.php" method="post">

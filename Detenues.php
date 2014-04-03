@@ -7,23 +7,7 @@ if( !isset($_POST['Nom']) || empty($_POST['Nom'])
 }
 else
 {
-    // Récupération de l'abonné
-
-    $sql = '';
-    $sql .= 'SELECT ';
-    $sql .= 'a.Code, a.Nom ';
-    $sql .= 'FROM ABONNES a ';
-    $sql .= 'WHERE a.Code = "'.$_POST['Code'].'"';
-    $sql .= ' LIMIT 1';
-
-    $rslt = $BD->exec($sql);
-    $abo = $BD->fetch($rslt);
-    if(empty($abo)){
-        throw new CoreException(102,'Le Code n\'existe pas.');
-    }
-    if($abo['Nom'] != $_POST['Nom']){
-        throw new CoreException(101,'Le Nom associé au Code n\'est pas le même.');
-    }
+    $BD->verfierAbonne($_POST['Nom'],$_POST['Code']);
 
     // Récupération des Videos possédées
 

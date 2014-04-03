@@ -37,7 +37,12 @@ class Outils {
         $s = "\t".'<h1>'.$page.' <small>© '.$auteurs.'</small></h1>'."\n";
         $s .= $this->menu($current);
         return $s;
+    }
 
+    public function admin_banniere($current="",$page='VideoExpress',$auteurs='Rémi Cadène'){
+        $s = "\t".'<h1>'.$page.' <small>© '.$auteurs.'</small></h1>'."\n";
+        $s .= $this->admin_menu($current);
+        return $s;
     }
 
     public function menu($current)
@@ -81,10 +86,7 @@ class Outils {
 
     public function admin_menu(){
         return '
-        <div id="menu">
-        <div>
-            <a href="#">Retour de cassettes</a>
-        </div>
+    <div id="menu">
         <div>
             <a href="#">Enregistrer de nouveaux aboonés</a>
         </div>

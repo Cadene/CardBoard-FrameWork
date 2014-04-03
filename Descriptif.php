@@ -5,9 +5,7 @@ if( !isset($_POST['NoFilm']) || empty($_POST['NoFilm']) ){
 }else{
 
     // Récupération du film
-
-    $sql = '';
-    $sql .= 'SELECT ';
+    $sql = 'SELECT ';
     $sql .= 'f.NoFilm, f.Titre, f.Nationalite, f.Realisateur, f.Couleur, f.Annee, f.Genre, f.Duree ';
     $sql .= 'FROM FILMS f ';
     $sql .= 'WHERE f.NoFilm = '.$_POST['NoFilm'];
@@ -19,9 +17,7 @@ if( !isset($_POST['NoFilm']) || empty($_POST['NoFilm']) ){
         $film = $row;
 
     // Récupération des acteurs du film
-
-    $sql = '';
-    $sql .= 'SELECT ';
+    $sql = 'SELECT ';
     $sql .= 'a.Acteur ';
     $sql .= 'FROM ACTEURS a ';
     $sql .= 'WHERE a.NoFilm = '.$_POST['NoFilm'];

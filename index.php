@@ -20,7 +20,7 @@
         $explode_url = explode('/',$parse_url['path']);
         $include_file = $explode_url[1];
 
-        if($include_file == 'gestion')
+        if(strtolower($include_file) == 'gestion')
         {
             if(!isset($explode_url[2]) || empty($explode_url[2]))
             {
