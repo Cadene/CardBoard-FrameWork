@@ -82,4 +82,6 @@
     echo $Outils->footer();
 
 
+// TODO gestion des input à 0 qui génère une exception de type args invalides
+
 

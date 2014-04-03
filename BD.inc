@@ -28,7 +28,7 @@ class BD {
         mysql_set_charset('utf8'); //!\\
         $this->bd = mysql_select_db($this->bd_name, $this->connect);
         if (!$this->bd) {
-            throw new CoreException(0, 'Impossible de sélectionner la base de données : ' . mysql_error());
+            throw new CoreException(1, 'Impossible de sélectionner la base de données : ' . mysql_error());
         }
         return $this->bd;
     }
@@ -52,7 +52,7 @@ class BD {
     public function exec($sql){
         $rslt = mysql_query($sql);
         if (!$rslt) {
-            throw new CoreException(0, 'Requête invalide : ' . mysql_error());
+            throw new CoreException(2, 'Requête invalide : ' . mysql_error());
         }
         return $rslt;
     }
