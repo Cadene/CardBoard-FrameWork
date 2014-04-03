@@ -34,8 +34,7 @@ class Outils {
      * @return string
      */
     public function banniere($current,$page='VideoExpress',$auteurs='Rémi Cadène'){
-        $s = '
-    <h1>'.$page.' <small>© '.$auteurs.'</small></h1>';
+        $s = "\t".'<h1>'.$page.' <small>© '.$auteurs.'</small></h1>'."\n";
         $s .= $this->menu($current);
         return $s;
 
@@ -70,7 +69,8 @@ class Outils {
         </div>';
         }
         if($current != 'IdentificationD.php'){
-        $s .= '<div>
+        $s .= '
+        <div>
             <a href="IdentificationD.php">Liste des cassettes détenues</a>
         </div>';
         }
@@ -109,11 +109,9 @@ class Outils {
      */
 
     public function footer(){
-    return '
-</body>
-</html>
-
-';
+        $s = "\n".'</body>'."\n";
+        $s.= '</html>'."\n";
+        return $s;
     }
 
     public function sanitize_posts(){

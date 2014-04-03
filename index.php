@@ -76,7 +76,10 @@
     }
     catch (CoreException $e)
     {
+        echo $Outils->banniere('Error.php');
+        echo "\n\n\t";
         echo $e->toHTML();
+        echo "\n";
     }
 
     echo $Outils->footer();

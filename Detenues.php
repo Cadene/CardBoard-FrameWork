@@ -1,25 +1,26 @@
 <?php
 
 if( !isset($_POST['Nom']) || empty($_POST['Nom'])
-    || !isset($_POST['Code']) || empty($_POST['Code'])){
-    throw new CoreException(101,"Args incorrectes.");
-}else{
-
+    || !isset($_POST['Code']) || empty($_POST['Code']))
+{
+    throw new CoreException(103,"Args incorrectes.");
+}
+else
+{
     // Récupération de l'abonné
 
     $sql = '';
     $sql .= 'SELECT ';
     $sql .= 'a.Code, a.Nom ';
     $sql .= 'FROM ABONNES a ';
-    $sql .= 'WHERE a.Code = '.$_POST['Code'];
+    $sql .= 'WHERE a.Code = "'.$_POST['Code'].'"';
     $sql .= ' LIMIT 1';
 
-    $abo = [];
     $rslt = $BD->exec($sql);
-    if($row = $BD->fetch($rslt))
-        $abo = $row;
-    else
-        throw new CoreException(101,'Le Code n\'existe pas.');
+    $abo = $BD->fetch($rslt);
+    if(empty($abo)){
+        throw new CoreException(102,'Le Code n\'existe pas.');
+    }
     if($abo['Nom'] != $_POST['Nom']){
         throw new CoreException(101,'Le Nom associé au Code n\'est pas le même.');
     }
@@ -30,7 +31,8 @@ if( !isset($_POST['Nom']) || empty($_POST['Nom'])
     $sql .= 'SELECT ';
     $sql .= 'e.NoFilm, e.NoExemplaire, e.DateEmpRes, f.Titre, f.Realisateur  ';
     $sql .= 'FROM EMPRES e, FILMS f ';
-    $sql .= 'WHERE e.CodeAbonne = '.$_POST['Code'];
+    $sql .= 'WHERE e.CodeAbonne = "'.$_POST['Code'].'"';
+    $sql .= ' AND f.NoFilm = e.NoFilm';
 
     $films = [];
     $rslt = $BD->exec($sql);
@@ -48,25 +50,19 @@ if( !isset($_POST['Nom']) || empty($_POST['Nom'])
     <table>
         <tr>
             <td>NoFilm</td>
+            <td>NoExemplaire</td>
+            <td>DateEmpRes</td>
             <td>Titre</td>
-            <td>Nationalite</td>
             <td>Realisateur</td>
-            <td>Couleur</td>
-            <td>Annee</td>
-            <td>Genre</td>
-            <td>Duree</td>
-            <td>Acteurs</td>
         </tr>
+        <?php foreach($films as $film): ?>
         <tr>
             <?php foreach($film as $f): ?>
-                <td><?= $f;?></td>
+            <td><?= $f;?></td>
             <?php endforeach;?>
-            <td><?php foreach($acteurs as $k=>$acteur):
-                    echo ($k!=0 ? ', ' : '').current($acteur);
-                endforeach;?></td>
         </tr>
+        <?php endforeach;?>
     </table>
-
 <?php endif; ?>
 
 
