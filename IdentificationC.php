@@ -4,6 +4,6 @@
 
 <form action="Commande.php" method="post">
     <input type="text" name="Nom" placeholder="Nom"/>
-    <input type="password" name="Pass" placeholder="Mot de passe"/>
+    <input type="text" name="Code" placeholder="Code"/>
     <input type="submit" value="Valider"/>
 </form>

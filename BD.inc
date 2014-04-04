@@ -1,5 +1,8 @@
 <?php
 
+/* /!\ */
+date_default_timezone_set('UTC');
+
 class BD {
 
     private $bd_name;
@@ -21,16 +24,12 @@ class BD {
      * Ouvre la connexion en utf8
      */
     public function connect(){
-        $this->connect = mysql_connect('127.0.0.1:3306', 'root', 'root');
-        if (!$this->connect) {
-            throw new CoreException(0,'Connexion impossible : ' . mysql_error());
+        $this->connect = new mysqli('127.0.0.1', 'root', 'root', $this->bd_name, '3306');
+        if ($this->connect->connect_errno) {
+            throw new CoreException(0,'Connexion impossible : ' . $this->connect->connect_error);
         }
-        mysql_set_charset('utf8'); //!\\
-        $this->bd = mysql_select_db($this->bd_name, $this->connect);
-        if (!$this->bd) {
-            throw new CoreException(1, 'Impossible de sélectionner la base de données : ' . mysql_error());
-        }
-        return $this->bd;
+        $this->connect->set_charset('utf8');
+        return true;
     }
 
     /**
@@ -38,7 +37,7 @@ class BD {
      */
     public function close(){
         if(isset($this->connect)){
-            mysql_close($this->connect);
+            $this->connect->close();
         }
     }
 
@@ -50,17 +49,16 @@ class BD {
      * @return resource
      */
     public function exec($sql){
-        $rslt = mysql_query($sql);
-        if (!$rslt) {
-            throw new CoreException(2, 'Requête invalide : ' . mysql_error());
+        $rslt = $this->connect->query($sql);
+        if ($this->connect->connect_errno) {
+            throw new CoreException(2, 'Requête invalide : ' . $this->connect->error);
         }
         return $rslt;
     }
 
     public function fetch($rslt){
-        return mysql_fetch_assoc($rslt);
+        return $rslt->fetch_array(MYSQLI_ASSOC);
     }
-
 
     public function verifierAbonne($Nom, $Code){
         // Récupération de l'abonné
@@ -78,6 +76,52 @@ class BD {
             throw new CoreException(101,'Le Nom associé au Code n\'est pas le même.');
         }
     }
+
+
+    /**
+     * Enlève les réservations expirées
+     *
+     * @param int $secondes Nombre de secondes avant expiration
+     *
+     * @return int Nombre de réservation expirée
+     */
+    public function verifierReservation($secondes=300)
+    {
+        // Récupération des réservations expirées
+        $sql = 'SELECT NoFilm, NoExemplaire ';
+        $sql .= 'FROM EMPRES ';
+        $sql .= 'WHERE CodeAbonne = "SERVEUR" ';
+        $sql .= ' AND UNIX_TIMESTAMP(DateEmpRes) < '.(time() - $secondes);
+        $rslt = $this->exec($sql);
+        $resa = [];
+        while($row = $this->fetch($rslt)){
+            $resa[] = $row;
+        }
+        if(empty($resa)) return 0;
+
+        // Suppression de ces réservations
+        foreach($resa as $r){
+            $sql = 'UPDATE ';
+            $sql .= 'CASSETTES ';
+            $sql .= 'SET Statut = "disponible"';
+            $sql .= 'WHERE NoFilm = '.$r['NoFilm'];
+            $sql .= ' AND NoExemplaire = '.$r['NoExemplaire'];
+            $sql .= ';';
+            $this->exec($sql);
+        }
+        foreach($resa as $r){
+            $sql = 'DELETE ';
+            $sql .= 'FROM EMPRES ';
+            $sql .= 'WHERE NoFilm = '.$r['NoFilm'];
+            $sql .= ' AND NoExemplaire = '.$r['NoExemplaire'];
+            $sql .= ';';
+            $this->exec($sql);
+        }
+
+
+        return count($resa);
+    }
+
 
 
 }

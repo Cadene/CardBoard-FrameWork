@@ -70,6 +70,9 @@
     {
         $BD->connect();
 
+        //echo '<div>'.$BD->verifierReservation(1).' réservations expirées</div>';
+        $BD->verifierReservation(300);
+
         include($include_file);
 
         $BD->close();

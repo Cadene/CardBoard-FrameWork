@@ -1,15 +1,18 @@
 <?php
 
-if( !isset($_POST['Nom']) || empty($_POST['Nom'])
-    || !isset($_POST['Pass']) || empty($_POST['Pass']))
+if(isset($_POST['Pass']))
 {
-    throw new CoreException(103,"Args incorrectes.");
+    $_POST['Code'] = $Outils->decrypt($_POST['Pass']);
 }
 else
 {
-    $abo = $BD->verifierAbonne($_POST['Nom'],$_POST['Pass']);
-    $abo['NbEmpruntables'] = 3 - $abo['NbCassettes'];
+    $abo = $BD->verifierAbonne($_POST['Nom'],$_POST['Code']);
+    if( !isset($_POST['Nom']) || empty($_POST['Nom']) || !isset($_POST['Code']) || empty($_POST['Code']))
+        throw new CoreException(103,"Args incorrectes.");
 }
+
+$abo['NbEmpruntables'] = 3 - $abo['NbCassettes'];
+
 ?>
 <?= $Outils->banniere($include_file);?>
 
@@ -23,16 +26,23 @@ else
         endif; ?>
     </div>
 
-    <?php if($abo['NbEmpruntables']==0): ?>
+    <?php if($abo['NbEmpruntables']!=0): ?>
     <form action="ConfirmeCommande.php" method="post">
         <table>
             <?php for($i=1; $i<=$abo['NbEmpruntables']; $i++): ?>
             <tr>
-                <td><input type="text" name="<?= 'NoFilm'.$i; ?>"/></td>
-                <td>Realisateur</td>
+                <td><input type="text" name="<?= 'NoFilm'.$i; ?>" placeholder="Numéro du film"/></td>
+                <td>
+                    <SELECT name="<?= 'Support'.$i; ?>">
+                        <OPTION value="DVD">DVD</OPTION>
+                        <OPTION value="VHS">VHS</OPTION>
+                    </SELECT>
+                </td>
             </tr>
             <?php endfor;?>
         </table>
+        <input type="hidden" name="Code" value="<?= $Outils->encrypt($_POST['Code']); ?>"/>
+        <input type="submit" value="Commander"/>
     </form>
     <?php endif; ?>
 
