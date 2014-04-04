@@ -1,17 +1,9 @@
 <?php
 
-function select($BD,$field,$table){
-    $array = [];
-    $rslt = $BD->exec('SELECT DISTINCT '.$field.' FROM '.$table);
-    while ($row = $BD->fetch($rslt)){
-        $array[] = $row[$field];
-    }
-    return $array;
-}
-
-$genres = select($BD,'Genre','FILMS');
-$realisateurs = select($BD,'Realisateur','FILMS');
-$acteurs = select($BD,'Acteur','ACTEURS');
+/* Récupération de tous les genres, réalisateurs et acteurs */
+$genres = $BD->findOne('Genre','FILMS');
+$realisateurs = $BD->findOne('Realisateur','FILMS');
+$acteurs = $BD->findOne('Acteur','ACTEURS');
 
 ?>
 

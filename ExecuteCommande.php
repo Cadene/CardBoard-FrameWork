@@ -1,19 +1,57 @@
 <?php
 
-$Cassettes = [];
+/* Traitement Code */
+$Outils->verifierPOST('Code');
+
+$Exemplaires = [];
 for($i=1; $i<=3; $i++){
-    if(isset($_POST['NoFilm'.$i]) && isset($_POST['NoCassette'.$i])){
-        $Cassettes[$_POST['NoFilm'.$i]] =  $_POST['NoCassette'.$i];
+    if(isset($_POST['NoFilm'.$i]) && isset($_POST['NoExemplaire'.$i])){
+        $Exemplaires[$_POST['NoFilm'.$i]] =  $_POST['NoExemplaire'.$i];
     }
 }
-if(empty($Cassettes)) throw new CoreException();
+if(empty($Exemplaires)) throw new CoreException();
 
-// TODO maj CASSETTES
-// TODO maj ABONNES
-// TODO insert EMPRES
+/* Récupération des Cassettes */
+$sql .= 'SELECT ';
+$sql .= 'f.NoFilm, f.Titre, f.Realisateur, c.NoExemplaire, c.Support ';
+$sql .= 'FROM FILMS f, CASSETTES c ';
+$sql .= 'WHERE c.NoFilm = f.NoFilm AND (';
+$k=0;
+foreach($Exemplaires as $NoFilm=>$NoExemplaire){
+    $sql .= ($k==0 ? '' : ' OR ') . '(c.NoFilm = '.$NoFilm.' AND c.NoExemplaire = '.$NoExemplaire.')';
+    $k++;
+}
+$sql .= ' )';
+$rslt = $BD->exec($sql);
+$Cassettes = [];
+while($row = $BD->fetch($rslt)){
+    $Cassettes[] = $row;
+}
+
+$BD->enleverReservations($_POST['Code']);
+
+$BD->emprunterCassettes($Exemplaires, $_POST['Code'], $Outils->date());
 
 ?>
 <?= $Outils->banniere($include_file); ?>
 
-<h2>Traitement de votre commande</h2>
+<h2>Récapitulatif de votre commande</h2>
+
+<table>
+    <tr>
+        <td>NoFilm</td>
+        <td>Titre</td>
+        <td>Réalisateur</td>
+        <td>NoExemplaire</td>
+        <td>Support</td>
+    </tr>
+    <?php foreach($Cassettes as $cassette): ?>
+    <tr>
+        <?php foreach($cassette as $c): ?>
+        <td><?= $c; ?></td>
+        <?php endforeach; ?>
+    </tr>
+    <?php endforeach; ?>
+</table>
+
 

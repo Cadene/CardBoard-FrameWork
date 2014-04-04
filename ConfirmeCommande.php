@@ -1,80 +1,34 @@
 <?php
 
-if(!isset($_POST['Code']) || empty($_POST['Code'])) throw new CoreException(100,'Invalid Args');
+$Outils->verifierPOST('Code');
 
-/* Traitement des NoFilms et Supports */
+/* Traitement des Supports associés à un film */
 
 $Supports = [];
-for($i=1; $i<=3; $i++){
-    if(isset($_POST['NoFilm'.$i]) && isset($_POST['Support'.$i])){
-        $Supports[$_POST['NoFilm'.$i]] =  $_POST['Support'.$i];
-    }
-}
-
-if(empty($Supports)) throw new CoreException(101,'Empty Args');
-
-/* Traitement Code */
-
-$_POST['Code'] = $Outils->decrypt($_POST['Code']);
-
-/* Récupération des films et des cassettes */
-
-$sql .= 'SELECT ';
-$sql .= 'f.NoFilm, f.Titre, f.Realisateur, c.NoExemplaire, c.Support, c.Statut ';
-$sql .= 'FROM FILMS f, CASSETTES c ';
-$sql .= 'WHERE c.NoFilm = f.NoFilm AND (';
-foreach($Supports as $NoFilm=>$Support){
-    if(!isset($first))
-        $first=true;
-    else
-        $sql .=  ' OR';
-    $sql .= ' f.NoFilm = '.$NoFilm;
-}
-$sql .= ' )';
-unset($first);
-
-$films = [];
-$resa = [];
-$rslt = $BD->exec($sql);
-$i=0;
-while($rows = $BD->fetch($rslt))
+$NoFilms = [];
+for($i=1; $i<=3; $i++)
 {
-    if(!isset($films[$rows['NoFilm']]))
+    if(
+        isset($_POST['NoFilm'.$i]) && isset($_POST['Support'.$i])
+        && !empty($_POST['NoFilm'.$i]) && !empty($_POST['Support'.$i]))
     {
-        $films[$rows['NoFilm']]['NoFilm'] = $rows['NoFilm'];
-        $films[$rows['NoFilm']]['Titre'] = $rows['Titre'];
-        $films[$rows['NoFilm']]['Realisateur'] = $rows['Realisateur'];
+        $Supports[$_POST['NoFilm'.$i]] =  $_POST['Support'.$i];
+        $NoFilms[] = $_POST['NoFilm'.$i];
     }
-    $films[$rows['NoFilm']]['Cassettes'][$rows['Statut']][$rows['Support']][] = $rows['NoExemplaire'];
-    if($rows['Statut'] == "disponible"){
-        $resa[$i]['NoExemplaire'] = $rows['NoExemplaire'];
-        $resa[$i]['NoFilm'] = $rows['NoFilm'];
-    }
-    $i++;
 }
+if(empty($Supports)) throw new CoreException(101,'Pas de supports');
 
-/* Réservation des cassettes */
-$date = date('Y-m-d H:i:s');
-foreach($resa as $r){
-    $sql = 'UPDATE ';
-    $sql .= 'CASSETTES ';
-    $sql .= 'SET Statut = "reservee"';
-    $sql .= 'WHERE NoFilm = '.$r['NoFilm'];
-    $sql .= ' AND NoExemplaire = '.$r['NoExemplaire'];
-    $sql .= ';';
-    $BD->exec($sql);
-}
-$sql = 'INSERT ';
-$sql .= 'INTO EMPRES ';
-$sql .= '(NoFilm, NoExemplaire, CodeAbonne, DateEmpRes) ';
-$sql .= 'VALUES ';
-foreach($resa as $k=>$r){
-    $sql .= ($k==0 ? '' : ',') . '('.$r['NoFilm'].','.$r['NoExemplaire'].',"SERVEUR","'.$date.'")';
-}
-$BD->exec($sql);
+/* Trouver les cassettes disponibles */
 
+$data = $BD->cassettesDisponibles($NoFilms,$_POST['Code']);
+$films = $data['Films'];
+$Exemplaires = $data['Exemplaires'];
+unset($data);
+if(empty($films)) throw new CoreException(102,'Aucune cassette disponible.');
 
-if(empty($films)) throw new CoreException(102,'Empty Films');
+/* Reserver les cassettes sélectionnées */
+
+$BD->reserverCassettes($Exemplaires, $_POST['Code'], $Outils->date());
 
 ?>
 <?= $Outils->banniere($include_file); ?>
@@ -96,18 +50,18 @@ if(empty($films)) throw new CoreException(102,'Empty Films');
             <td><?= $film['Titre'];?></td>
             <td><?= $film['Realisateur'];?></td>
             <?php /* Film non disponible */ ?>
-            <?php if (!isset($film['Cassettes']['disponible'])): ?>
+            <?php if (!isset($film['Exemplaires']['disponible'])): ?>
             <td>
                 <span>Non</span>
             </td>
             <?php /* Support non disponible */ ?>
-            <?php elseif (!isset($film['Cassettes']['disponible'][$Supports[$film['NoFilm']]])): ?>
+            <?php elseif (!isset($film['Exemplaires']['disponible'][$Supports[$film['NoFilm']]])): ?>
             <?php $nbDispo++;?>
             <td>
-                <span><?= $film['Cassettes']['disponible'][0]; ?></span>
-                <SELECT name="<?= 'NoCassette'.$i; ?>">
-                <?php foreach($film['Cassettes']['disponible'][0] as $NoCassette): ?>
-                    <OPTION value="<?= $NoCassette;?>"><?= $NoCassette;?></OPTION>
+                <span><?= $film['Exemplaires']['disponible'][0]; ?></span>
+                <SELECT name="<?= 'NoExemplaire'.$i; ?>">
+                <?php foreach($film['Exemplaires']['disponible'][0] as $NoExemplaire): ?>
+                    <OPTION value="<?= $NoExemplaire;?>"><?= $NoExemplaire;?></OPTION>
                 <?php endforeach; ?>
                 </SELECT>
             </td>
@@ -116,14 +70,14 @@ if(empty($films)) throw new CoreException(102,'Empty Films');
             <?php $nbDispo++;?>
             <td>
                 <span>Oui</span>
-                <SELECT name="<?= 'NoCassette'.$i; ?>">
-                    <?php foreach($film['Cassettes']['disponible'][$Supports[$film['NoFilm']]] as $NoCassette): ?>
-                        <OPTION value="<?= $NoCassette;?>"><?= $NoCassette;?></OPTION>
+                <SELECT name="<?= 'NoExemplaire'.$i; ?>">
+                    <?php foreach($film['Exemplaires']['disponible'][$Supports[$film['NoFilm']]] as $NoExemplaire): ?>
+                        <OPTION value="<?= $NoExemplaire;?>"><?= $NoExemplaire;?></OPTION>
                     <?php endforeach; ?>
                 </SELECT>
             </td>
             <?php endif; ?>
-            <input type="hidden" name="NbFilm<?= $i; ?>" value="<?= $film['NoFilm']; ?>"/>
+            <input type="hidden" name="NoFilm<?= $i; ?>" value="<?= $film['NoFilm']; ?>"/>
         </tr>
         <?php $i++;
         endforeach;?>

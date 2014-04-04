@@ -1,42 +1,37 @@
 <?php
 
-if(
-    !isset($_POST['mots'])
-    || !isset($_POST['support']) || empty($_POST['support'])
-    || !isset($_POST['dispo']) || empty($_POST['dispo'])
-    || !isset($_POST['genre']) || empty($_POST['genre'])
-    || !isset($_POST['realisateur']) || empty($_POST['realisateur'])
-    || !isset($_POST['acteur']) || empty($_POST['acteur'])
-){
-    throw new CoreException();
-}else{
+/* Verification des $_POST */
 
-     // Récupération des films
+$Outils->verifierPOST('mots',true);
+foreach(array('support','dispo','genre','realisateur','acteur') as $field)
+    $Outils->verifierPOST($field);
 
-    $sql = "";
-    $sql .= 'SELECT DISTINCT ';
-    $sql .= 'f.NoFilm, f.Titre, f.Nationalite, f.Realisateur, f.Couleur, f.Annee, f.Genre, f.Duree, f.Synopsis ';
-    $sql .= 'FROM FILMS f ';
-    $sql .= 'WHERE 1=1 ';
+/* Récupération des films */
 
-    if($_POST['realisateur'] != -1)
-        $sql .= ' AND f.Realisateur = "'.$_POST['realisateur'].'"';
+$sql = "";
+$sql .= 'SELECT DISTINCT ';
+$sql .= 'f.NoFilm, f.Titre, f.Nationalite, f.Realisateur, f.Couleur, f.Annee, f.Genre, f.Duree, f.Synopsis ';
+$sql .= 'FROM FILMS f ';
+$sql .= 'WHERE 1=1 ';
 
-    if($_POST['genre'] != -1)
-        $sql .= ' AND f.Genre = "'.$_POST['genre'].'"';
+if($_POST['realisateur'] != -1)
+    $sql .= ' AND f.Realisateur = "'.$_POST['realisateur'].'"';
 
-    if(!empty($_POST['mots'])){
-        foreach(explode(" ",$_POST['mots']) as $mot){
-            $sql .= ' AND f.Titre LIKE \'%'.$mot.'%\'';
-        }
+if($_POST['genre'] != -1)
+    $sql .= ' AND f.Genre = "'.$_POST['genre'].'"';
+
+if(!empty($_POST['mots'])){
+    foreach(explode(" ",$_POST['mots']) as $mot){
+        $sql .= ' AND f.Titre LIKE \'%'.$mot.'%\'';
     }
-
-    $films = [];
-    $rslt = $BD->exec($sql);
-    while($row = $BD->fetch($rslt))
-        $films[] = $row;
-
 }
+
+$films = [];
+$rslt = $BD->exec($sql);
+while($row = $BD->fetch($rslt))
+    $films[] = $row;
+
+
 ?>
 <?= $Outils->banniere($include_file);?>
 

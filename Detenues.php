@@ -5,24 +5,22 @@ if( !isset($_POST['Nom']) || empty($_POST['Nom'])
 {
     throw new CoreException(103,"Args incorrectes.");
 }
-else
-{
-    $BD->verfierAbonne($_POST['Nom'],$_POST['Code']);
 
-    // Récupération des Videos possédées
+$BD->verfierAbonne($_POST['Nom'],$_POST['Code']);
 
-    $sql = '';
-    $sql .= 'SELECT ';
-    $sql .= 'e.NoFilm, e.NoExemplaire, e.DateEmpRes, f.Titre, f.Realisateur  ';
-    $sql .= 'FROM EMPRES e, FILMS f ';
-    $sql .= 'WHERE e.CodeAbonne = "'.$_POST['Code'].'"';
-    $sql .= ' AND f.NoFilm = e.NoFilm';
+// Récupération des Videos possédées
+$sql = '';
+$sql .= 'SELECT ';
+$sql .= 'e.NoFilm, e.NoExemplaire, e.DateEmpRes, f.Titre, f.Realisateur  ';
+$sql .= 'FROM EMPRES e, FILMS f ';
+$sql .= 'WHERE e.CodeAbonne = "'.$_POST['Code'].'"';
+$sql .= ' AND f.NoFilm = e.NoFilm';
 
-    $films = [];
-    $rslt = $BD->exec($sql);
-    while($row = $BD->fetch($rslt))
-        $films[] = $row;
-}
+$films = [];
+$rslt = $BD->exec($sql);
+while($row = $BD->fetch($rslt))
+    $films[] = $row;
+
 ?>
 <?= $Outils->banniere($include_file);?>
 

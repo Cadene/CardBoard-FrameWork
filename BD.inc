@@ -50,7 +50,7 @@ class BD {
      */
     public function exec($sql){
         $rslt = $this->connect->query($sql);
-        if ($this->connect->connect_errno) {
+        if ($this->connect->error) {
             throw new CoreException(2, 'Requête invalide : ' . $this->connect->error);
         }
         return $rslt;
@@ -60,6 +60,29 @@ class BD {
         return $rslt->fetch_array(MYSQLI_ASSOC);
     }
 
+    /**
+     * Trouve distinctement un seul champ d'une table
+     *
+     * @param $field
+     * @param $table
+     * @return array
+     */
+    function findOne($field,$table){
+        $array = [];
+        $rslt = $this->exec('SELECT DISTINCT '.$field.' FROM '.$table);
+        while ($row = $this->fetch($rslt)){
+            $array[] = $row[$field];
+        }
+        return $array;
+    }
+
+    /**
+     * Vérification des identifiants de l'abonné
+     *
+     * @param $Nom
+     * @param $Code
+     * @throws CoreException
+     */
     public function verifierAbonne($Nom, $Code){
         // Récupération de l'abonné
         $sql = 'SELECT ';
@@ -85,13 +108,34 @@ class BD {
      *
      * @return int Nombre de réservation expirée
      */
-    public function verifierReservation($secondes=300)
+    public function verifierReservations($secondes=300)
+    {
+        return $this->enleverReservationsCond(
+            'UNIX_TIMESTAMP(DateEmpRes) < '.(time() - $secondes)
+        );
+    }
+
+    /**
+     * Enlève les réservations d'un utilisateur
+     *
+     * @param $Code
+     * @return int
+     */
+    public function enleverReservations($Code)
+    {
+        return $this->enleverReservationsCond(
+            'e.CodeAbonne = "'.$Code.'"'
+        );
+    }
+
+    public function enleverReservationsCond($condition)
     {
         // Récupération des réservations expirées
-        $sql = 'SELECT NoFilm, NoExemplaire ';
-        $sql .= 'FROM EMPRES ';
-        $sql .= 'WHERE CodeAbonne = "SERVEUR" ';
-        $sql .= ' AND UNIX_TIMESTAMP(DateEmpRes) < '.(time() - $secondes);
+        $sql = 'SELECT e.NoFilm, e.NoExemplaire ';
+        $sql .= 'FROM EMPRES e, CASSETTES c ';
+        $sql .= 'WHERE '.$condition;
+        $sql .= ' AND e.NoFilm = c.NoFilm AND e.NoExemplaire = c.NoExemplaire';
+        $sql .= ' AND c.Statut = "reservee"';
         $rslt = $this->exec($sql);
         $resa = [];
         while($row = $this->fetch($rslt)){
@@ -122,6 +166,129 @@ class BD {
         return count($resa);
     }
 
+    /**
+     * Selection et formatage des cassettes disponibles pour l'utilisateur
+     *
+     * @param $NoFilms
+     * @param $Code
+     * @return array
+     */
+    public function cassettesDisponibles($NoFilms,$Code)
+    {
+        /* Disponibles ou Empruntee*/
+        $sql = 'SELECT ';
+        $sql .= 'f.NoFilm, f.Titre, f.Realisateur, ';
+        $sql .= 'c.NoExemplaire, c.Support, c.Statut ';
+        $sql .= 'FROM FILMS f, CASSETTES c ';
+        $sql .= 'WHERE c.NoFilm = f.NoFilm';
+        $sql .= ' AND (c.Statut = "disponible" OR c.Statut = "empruntee")';
+        $sql .= ' AND (';
+        $k=0;
+        foreach($NoFilms as $NoFilm){
+            $sql .= ($k==0 ? '' : ' OR ') . 'f.NoFilm = '.$NoFilm;
+            $k++;
+        }
+        $sql .= ' )';
+        $disponibles = $this->exec($sql);
+
+        /* Reservées */
+        $sql = 'SELECT ';
+        $sql .= 'f.NoFilm, f.Titre, f.Realisateur, ';
+        $sql .= 'c.NoExemplaire, c.Support, c.Statut ';
+        $sql .= 'FROM FILMS f, CASSETTES c, EMPRES e ';
+        $sql .= 'WHERE c.NoFilm = f.NoFilm';
+        $sql .= ' AND c.Statut = "reservee"';
+        $sql .= ' AND e.NoFilm = f.NoFilm AND e.NoExemplaire = c.NoExemplaire';
+        $sql .= ' AND e.CodeAbonne = "'.$Code.'"';
+        $sql .= ' AND (';
+        $k=0;
+        foreach($NoFilms as $NoFilm){
+            $sql .= ($k==0 ? '' : ' OR ') . 'f.NoFilm = '.$NoFilm;
+            $k++;
+        }
+        $sql .= ' )';
+        $reservees = $this->exec($sql);
+
+        $films = [];
+        $exemplaires = [];
+        foreach([$disponibles,$reservees] as $rslt)
+        {
+            while($rows = $this->fetch($rslt))
+            {
+                if(!isset($films[$rows['NoFilm']]))
+                {
+                    $films[$rows['NoFilm']]['NoFilm'] = $rows['NoFilm'];
+                    $films[$rows['NoFilm']]['Titre'] = $rows['Titre'];
+                    $films[$rows['NoFilm']]['Realisateur'] = $rows['Realisateur'];
+                }
+                if($rows['Statut'] == "reservee")
+                    $rows['Statut'] = "disponible";
+                $films[$rows['NoFilm']]['Exemplaires'][$rows['Statut']][$rows['Support']][] = $rows['NoExemplaire'];
+                $exemplaires[$rows['NoFilm']][] = $rows['NoExemplaire'];
+            }
+        }
+
+        $data['Films'] = $films;
+        $data['Exemplaires'] = $exemplaires;
+        return $data;
+    }
+
+    public function emprunterCassettes($Exemplaires, $Code, $date)
+    {
+        foreach ($Exemplaires as $NoFilm=>$NoExemplaire) {
+            $sql = 'UPDATE ';
+            $sql .= 'CASSETTES ';
+            $sql .= 'SET Statut = "empruntee" ';
+            $sql .= 'WHERE NoFilm = '.$NoFilm.' AND '.$NoExemplaire;
+            $this->exec($sql);
+        }
+
+        /* Mise à jour du nombre d'emprunt de l'abonné */
+        $sql = 'UPDATE ';
+        $sql .= 'ABONNES ';
+        $sql .= 'SET NbCassettes = NbCassettes + 1 ';
+        $sql .= 'WHERE Code = "'.$_POST['Code'].'"';
+        $this->exec($sql);
+
+        /* Création des emprunts */
+        $sql = 'INSERT ';
+        $sql .= 'INTO EMPRES ';
+        $sql .= '(NoFilm, NoExemplaire, CodeAbonne, DateEmpRes) ';
+        $sql .= 'VALUES ';
+        $k=0;
+        foreach($Exemplaires as $NoFilm=>$NoExemplaire){
+            $sql .= ($k==0 ? '' : ',') . '('.$NoFilm.','.$NoExemplaire.',"'.$Code.'","'.$date.'")';
+            $k++;
+        }
+        $this->exec($sql);
+    }
+
+    public function reserverCassettes($Exemplaires, $Code, $date)
+    {
+        foreach ($Exemplaires as $NoFilm=>$NoExemplaire) {
+            foreach($NoExemplaire as $NoE){
+                $sql = 'UPDATE ';
+                $sql .= 'CASSETTES ';
+                $sql .= 'SET Statut = "reservee" ';
+                $sql .= 'WHERE NoFilm = '.$NoFilm.' AND '.$NoE;
+                $this->exec($sql);
+            }
+        }
+        /* Création des emprunts */
+        $sql = 'INSERT ';
+        $sql .= 'INTO EMPRES ';
+        $sql .= '(NoFilm, NoExemplaire, CodeAbonne, DateEmpRes) ';
+        $sql .= 'VALUES ';
+        $k=0;
+        foreach($Exemplaires as $NoFilm=>$NoExemplaire){
+            foreach($NoExemplaire as $NoE){
+                $sql .= ($k==0 ? '' : ',') . '('.$NoFilm.','.$NoE.',"'.$Code.'","'.$date.'")';
+                $k++;
+            }
+        }
+        $this->exec($sql);
+
+    }
 
 
 }

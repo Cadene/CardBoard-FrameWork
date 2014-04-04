@@ -157,4 +157,26 @@ class Outils {
         return unserialize($data);
     }
 
+    public function date(){
+        return date('Y-m-d H:i:s');
+    }
+
+    // TODO gestion des Regexp
+    /**
+     * Vérification de la validité des champs
+     * Décryptage si field est Pass ou Code
+     *
+     * @param $field
+     * @param $canEmpty
+     * @throws CoreException
+     */
+    public function verifierPOST($field,$canEmpty=false) {
+        $error = 'Le champ '.$field.' de la variable globale $_POST ';
+        if (!isset($_POST[$field]))
+            throw new CoreException(0, $error.'n\'est pas déclarée.');
+        if (!$canEmpty && empty($_POST[$field]))
+            throw new CoreException(1, $error.'est vide.');
+        if($field == 'Pass' || $field == 'Code')
+            $_POST[$field] = $this->decrypt($_POST[$field]);
+    }
 }
