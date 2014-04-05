@@ -1,15 +1,12 @@
 <?php
 
-if(isset($_POST['Pass']))
-{
-    $_POST['Code'] = $Outils->decrypt($_POST['Pass']);
-}
-else
-{
-    $abo = $BD->verifierAbonne($_POST['Nom'],$_POST['Code']);
-    if( !isset($_POST['Nom']) || empty($_POST['Nom']) || !isset($_POST['Code']) || empty($_POST['Code']))
-        throw new CoreException(103,"Args incorrectes.");
-}
+
+foreach(array('Nom','Code') as $field) { $Outils->verifierPOST($field); }
+
+print_r($_POST);
+$abo = $BD->verifierAbonne($_POST['Nom'],$_POST['Code']);
+
+$Outils->creerCOOKIE($_POST['Nom'],$_POST['Code']);
 
 $abo['NbEmpruntables'] = 3 - $abo['NbCassettes'];
 

@@ -1,14 +1,13 @@
 <?php
 
-if( !isset($_POST['Nom']) || empty($_POST['Nom'])
-    || !isset($_POST['Code']) || empty($_POST['Code']))
-{
-    throw new CoreException(103,"Args incorrectes.");
-}
+foreach(array('Nom','Code') as $field) { $Outils->verifierPOST($field); }
 
-$BD->verfierAbonne($_POST['Nom'],$_POST['Code']);
+$BD->verifierAbonne($_POST['Nom'],$_POST['Code']);
+
+//$Outils->creerCOOKIE($_POST['Nom'],$_POST['Code']);
 
 // Récupération des Videos possédées
+
 $sql = '';
 $sql .= 'SELECT ';
 $sql .= 'e.NoFilm, e.NoExemplaire, e.DateEmpRes, f.Titre, f.Realisateur  ';

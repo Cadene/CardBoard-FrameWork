@@ -2,17 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fd432128-d91d-4120-9639-a2ddd9048a6e" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BD.inc" afterPath="$PROJECT_DIR$/BD.inc" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Commande.php" afterPath="$PROJECT_DIR$/Commande.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ConfirmeCommande.php" afterPath="$PROJECT_DIR$/ConfirmeCommande.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Detenues.php" afterPath="$PROJECT_DIR$/Detenues.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ExecuteCommande.php" afterPath="$PROJECT_DIR$/ExecuteCommande.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Outils.inc" afterPath="$PROJECT_DIR$/Outils.inc" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Recherche.php" afterPath="$PROJECT_DIR$/Recherche.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="www.iws" />
     <ignored path=".idea/workspace.xml" />
     <file path="/Accueil.php" changelist="fd432128-d91d-4120-9639-a2ddd9048a6e" time="1396481303664" ignored="false" />
     <file path="/AccueilDescriptif.php" changelist="fd432128-d91d-4120-9639-a2ddd9048a6e" time="1396516568746" ignored="false" />
-    <file path="/Outils.inc" changelist="fd432128-d91d-4120-9639-a2ddd9048a6e" time="1396657959945" ignored="false" />
+    <file path="/Outils.inc" changelist="fd432128-d91d-4120-9639-a2ddd9048a6e" time="1396662191998" ignored="false" />
     <file path="/Dummy.txt" changelist="fd432128-d91d-4120-9639-a2ddd9048a6e" time="1396617014362" ignored="false" />
     <file path="/index.php" changelist="fd432128-d91d-4120-9639-a2ddd9048a6e" time="1396628423417" ignored="false" />
     <file path="/.htaccess" changelist="fd432128-d91d-4120-9639-a2ddd9048a6e" time="1396482570960" ignored="false" />
@@ -23,16 +25,16 @@
     <file path="/AccueilRetour.php" changelist="fd432128-d91d-4120-9639-a2ddd9048a6e" time="1396541924719" ignored="false" />
     <file path="/BD.php" changelist="fd432128-d91d-4120-9639-a2ddd9048a6e" time="1396471647065" ignored="false" />
     <file path="/AccueilRecherche.php" changelist="fd432128-d91d-4120-9639-a2ddd9048a6e" time="1396619098991" ignored="false" />
-    <file path="/BD.inc" changelist="fd432128-d91d-4120-9639-a2ddd9048a6e" time="1396657469739" ignored="false" />
-    <file path="/Recherche.php" changelist="fd432128-d91d-4120-9639-a2ddd9048a6e" time="1396619938875" ignored="false" />
+    <file path="/BD.inc" changelist="fd432128-d91d-4120-9639-a2ddd9048a6e" time="1396658413054" ignored="false" />
+    <file path="/Recherche.php" changelist="fd432128-d91d-4120-9639-a2ddd9048a6e" time="1396661865517" ignored="false" />
     <file path="/CoreException.inc" changelist="fd432128-d91d-4120-9639-a2ddd9048a6e" time="1396475291401" ignored="false" />
     <file path="/Descriptif.php" changelist="fd432128-d91d-4120-9639-a2ddd9048a6e" time="1396518507495" ignored="false" />
     <file path="/IdentificationD.php" changelist="fd432128-d91d-4120-9639-a2ddd9048a6e" time="1396534719195" ignored="false" />
-    <file path="/Detenues.php" changelist="fd432128-d91d-4120-9639-a2ddd9048a6e" time="1396546123702" ignored="false" />
+    <file path="/Detenues.php" changelist="fd432128-d91d-4120-9639-a2ddd9048a6e" time="1396661156638" ignored="false" />
     <file path="/Retour.php" changelist="fd432128-d91d-4120-9639-a2ddd9048a6e" time="1396544601534" ignored="false" />
-    <file path="/Commande.php" changelist="fd432128-d91d-4120-9639-a2ddd9048a6e" time="1396547835924" ignored="false" />
+    <file path="/Commande.php" changelist="fd432128-d91d-4120-9639-a2ddd9048a6e" time="1396659747832" ignored="false" />
     <file path="/ExecuteCommande.php" changelist="fd432128-d91d-4120-9639-a2ddd9048a6e" time="1396657357220" ignored="false" />
-    <file path="/ConfirmeCommande.php" changelist="fd432128-d91d-4120-9639-a2ddd9048a6e" time="1396657320614" ignored="false" />
+    <file path="/ConfirmeCommande.php" changelist="fd432128-d91d-4120-9639-a2ddd9048a6e" time="1396661017463" ignored="false" />
     <file path="/a.dummy" changelist="fd432128-d91d-4120-9639-a2ddd9048a6e" time="1396620582989" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -58,50 +60,19 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Outils.inc" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Outils.inc">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="167" column="24" selection-start="4190" selection-end="4190" vertical-scroll-proportion="0.49920508">
-              <folding>
-                <marker date="1396658022000" expanded="true" signature="202:336" placeholder="..." />
-                <marker date="1396658022000" expanded="true" signature="209:326" placeholder="..." />
-                <marker date="1396658022000" expanded="true" signature="1127:1188" placeholder="..." />
-                <marker date="1396658022000" expanded="true" signature="1279:1364" placeholder="..." />
-                <marker date="1396658022000" expanded="true" signature="1454:1535" placeholder="..." />
-                <marker date="1396658022000" expanded="true" signature="1624:1707" placeholder="..." />
-                <marker date="1396658022000" expanded="true" signature="1796:1886" placeholder="..." />
-                <marker date="1396658022000" expanded="true" signature="2024:2381" placeholder="..." />
-                <marker date="1396658022000" expanded="true" signature="2038:2113" placeholder="..." />
-                <marker date="1396658022000" expanded="true" signature="2127:2201" placeholder="..." />
-                <marker date="1396658022000" expanded="true" signature="2215:2277" placeholder="..." />
-                <marker date="1396658022000" expanded="true" signature="2291:2370" placeholder="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="ConfirmeCommande.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ConfirmeCommande.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="63" column="59" selection-start="2022" selection-end="2022" vertical-scroll-proportion="-5.4">
+            <state line="20" column="0" selection-start="515" selection-end="515" vertical-scroll-proportion="-4.0">
               <folding>
-                <marker date="1396657320000" expanded="true" signature="919:1133" placeholder="..." />
-                <marker date="1396657320000" expanded="true" signature="931:1133" placeholder="..." />
-                <marker date="1396657320000" expanded="true" signature="944:1050" placeholder="..." />
-                <marker date="1396657320000" expanded="true" signature="1610:1643" placeholder="..." />
-                <marker date="1396657320000" expanded="true" signature="1610:1636" placeholder="..." />
-                <marker date="1396657320000" expanded="true" signature="1928:1962" placeholder="..." />
-                <marker date="1396657320000" expanded="true" signature="2535:2608" placeholder="..." />
+                <marker date="1396661022000" expanded="true" signature="970:1184" placeholder="..." />
+                <marker date="1396661022000" expanded="true" signature="982:1184" placeholder="..." />
+                <marker date="1396661022000" expanded="true" signature="995:1101" placeholder="..." />
+                <marker date="1396661022000" expanded="true" signature="1661:1694" placeholder="..." />
+                <marker date="1396661022000" expanded="true" signature="1661:1687" placeholder="..." />
+                <marker date="1396661022000" expanded="true" signature="1979:2013" placeholder="..." />
+                <marker date="1396661022000" expanded="true" signature="2586:2659" placeholder="..." />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="NotFound.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/NotFound.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="39" selection-start="39" selection-end="39" vertical-scroll-proportion="-0.0">
-              <folding />
             </state>
           </provider>
         </entry>
@@ -115,46 +86,68 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="AccueilRetour.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/gestion/AccueilRetour.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Retour.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/gestion/Retour.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Outils.inc" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Outils.inc">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="212" column="4" selection-start="5384" selection-end="5384" vertical-scroll-proportion="0.8569157">
+              <folding>
+                <marker date="1396662208000" expanded="true" signature="202:336" placeholder="..." />
+                <marker date="1396662208000" expanded="true" signature="209:326" placeholder="..." />
+                <marker date="1396662208000" expanded="true" signature="1127:1188" placeholder="..." />
+                <marker date="1396662208000" expanded="true" signature="1279:1364" placeholder="..." />
+                <marker date="1396662208000" expanded="true" signature="1454:1535" placeholder="..." />
+                <marker date="1396662208000" expanded="true" signature="1624:1707" placeholder="..." />
+                <marker date="1396662208000" expanded="true" signature="1796:1886" placeholder="..." />
+                <marker date="1396662208000" expanded="true" signature="2024:2381" placeholder="..." />
+                <marker date="1396662208000" expanded="true" signature="2038:2113" placeholder="..." />
+                <marker date="1396662208000" expanded="true" signature="2127:2201" placeholder="..." />
+                <marker date="1396662208000" expanded="true" signature="2215:2277" placeholder="..." />
+                <marker date="1396662208000" expanded="true" signature="2291:2370" placeholder="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="index.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="73" column="37" selection-start="1635" selection-end="1635" vertical-scroll-proportion="-12.833333">
+            <state line="75" column="16" selection-start="1655" selection-end="1668" vertical-scroll-proportion="-12.208333">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ExecuteCommande.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ExecuteCommande.php">
+      <file leaf-file-name="index.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/gestion/index.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="15" column="35" selection-start="395" selection-end="395" vertical-scroll-proportion="1.8933333">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Detenues.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Detenues.php">
+      <file leaf-file-name="Menu.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/gestion/Menu.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="8" column="14" selection-start="186" selection-end="186" vertical-scroll-proportion="-0.625">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="CoreException.inc" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/CoreException.inc">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="11" column="59" selection-start="269" selection-end="269" vertical-scroll-proportion="-6.875">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="BD.inc" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/BD.inc">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="264" column="75" selection-start="8025" selection-end="8025" vertical-scroll-proportion="-2.2244897">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.0">
               <folding />
             </state>
           </provider>
@@ -163,7 +156,16 @@
       <file leaf-file-name="Commande.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Commande.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="44" column="16" selection-start="1428" selection-end="1428" vertical-scroll-proportion="-18.083334">
+            <state line="1" column="0" selection-start="6" selection-end="6" vertical-scroll-proportion="-0.625">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Recherche.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Recherche.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="28" column="53" selection-start="856" selection-end="856" vertical-scroll-proportion="-17.5">
               <folding />
             </state>
           </provider>
@@ -194,14 +196,14 @@
         <option value="$PROJECT_DIR$/NotFound.php" />
         <option value="$PROJECT_DIR$/gestion/Retour.php" />
         <option value="$PROJECT_DIR$/IdentificationC.php" />
-        <option value="$PROJECT_DIR$/Commande.php" />
-        <option value="$PROJECT_DIR$/Detenues.php" />
         <option value="$PROJECT_DIR$/AccueilRecherche.php" />
-        <option value="$PROJECT_DIR$/Recherche.php" />
-        <option value="$PROJECT_DIR$/ConfirmeCommande.php" />
-        <option value="$PROJECT_DIR$/ExecuteCommande.php" />
         <option value="$PROJECT_DIR$/index.php" />
         <option value="$PROJECT_DIR$/BD.inc" />
+        <option value="$PROJECT_DIR$/Commande.php" />
+        <option value="$PROJECT_DIR$/ConfirmeCommande.php" />
+        <option value="$PROJECT_DIR$/ExecuteCommande.php" />
+        <option value="$PROJECT_DIR$/Detenues.php" />
+        <option value="$PROJECT_DIR$/Recherche.php" />
         <option value="$PROJECT_DIR$/Outils.inc" />
       </list>
     </option>
@@ -253,6 +255,20 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="www" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="www" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="www" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="gestion" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -431,9 +447,16 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Descriptif.php">
+    <entry file="file://$PROJECT_DIR$/BD.inc">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="9" selection-start="174" selection-end="174" vertical-scroll-proportion="-0.7083333">
+        <state line="99" column="9" selection-start="2536" selection-end="2536" vertical-scroll-proportion="-9.877551">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/IdentificationD.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="8" column="7" selection-start="301" selection-end="301" vertical-scroll-proportion="-5.0">
           <folding />
         </state>
       </provider>
@@ -445,25 +468,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/IdentificationD.php">
+    <entry file="file://$PROJECT_DIR$/Detenues.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="7" selection-start="301" selection-end="301" vertical-scroll-proportion="-5.0">
-          <folding>
-            <marker date="1396534740000" expanded="true" signature="-1:-1" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Recherche.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="28" selection-start="213" selection-end="213" vertical-scroll-proportion="1.875">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/AccueilDescriptif.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="68" selection-start="194" selection-end="194" vertical-scroll-proportion="-3.125">
+        <state line="4" column="50" selection-start="132" selection-end="132" vertical-scroll-proportion="-0.8">
           <folding />
         </state>
       </provider>
@@ -475,17 +482,32 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Detenues.php">
+    <entry file="file://$PROJECT_DIR$/ExecuteCommande.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="14" selection-start="186" selection-end="186" vertical-scroll-proportion="-0.625">
+        <state line="4" column="50" selection-start="110" selection-end="110" vertical-scroll-proportion="-0.8">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/CoreException.inc">
+    <entry file="file://$PROJECT_DIR$/Commande.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="59" selection-start="269" selection-end="269" vertical-scroll-proportion="-6.875">
+        <state line="1" column="0" selection-start="6" selection-end="6" vertical-scroll-proportion="-0.625">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ConfirmeCommande.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="20" column="0" selection-start="515" selection-end="515" vertical-scroll-proportion="-4.0">
+          <folding>
+            <marker date="1396661022000" expanded="true" signature="970:1184" placeholder="..." />
+            <marker date="1396661022000" expanded="true" signature="982:1184" placeholder="..." />
+            <marker date="1396661022000" expanded="true" signature="995:1101" placeholder="..." />
+            <marker date="1396661022000" expanded="true" signature="1661:1694" placeholder="..." />
+            <marker date="1396661022000" expanded="true" signature="1661:1687" placeholder="..." />
+            <marker date="1396661022000" expanded="true" signature="1979:2013" placeholder="..." />
+            <marker date="1396661022000" expanded="true" signature="2586:2659" placeholder="..." />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -496,72 +518,64 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/NotFound.php">
+    <entry file="file://$PROJECT_DIR$/gestion/Menu.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="39" selection-start="39" selection-end="39" vertical-scroll-proportion="-0.0">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Commande.php">
+    <entry file="file://$PROJECT_DIR$/gestion/index.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="44" column="16" selection-start="1428" selection-end="1428" vertical-scroll-proportion="-18.083334">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ConfirmeCommande.php">
+    <entry file="file://$PROJECT_DIR$/gestion/AccueilRetour.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="63" column="59" selection-start="2022" selection-end="2022" vertical-scroll-proportion="-5.4">
-          <folding>
-            <marker date="1396657320000" expanded="true" signature="919:1133" placeholder="..." />
-            <marker date="1396657320000" expanded="true" signature="931:1133" placeholder="..." />
-            <marker date="1396657320000" expanded="true" signature="944:1050" placeholder="..." />
-            <marker date="1396657320000" expanded="true" signature="1610:1643" placeholder="..." />
-            <marker date="1396657320000" expanded="true" signature="1610:1636" placeholder="..." />
-            <marker date="1396657320000" expanded="true" signature="1928:1962" placeholder="..." />
-            <marker date="1396657320000" expanded="true" signature="2535:2608" placeholder="..." />
-          </folding>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ExecuteCommande.php">
+    <entry file="file://$PROJECT_DIR$/gestion/Retour.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="35" selection-start="395" selection-end="395" vertical-scroll-proportion="1.8933333">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Recherche.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="28" column="53" selection-start="856" selection-end="856" vertical-scroll-proportion="-17.5">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/index.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="73" column="37" selection-start="1635" selection-end="1635" vertical-scroll-proportion="-12.833333">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/BD.inc">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="264" column="75" selection-start="8025" selection-end="8025" vertical-scroll-proportion="-2.2244897">
+        <state line="75" column="16" selection-start="1655" selection-end="1668" vertical-scroll-proportion="-12.208333">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Outils.inc">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="167" column="24" selection-start="4190" selection-end="4190" vertical-scroll-proportion="0.49920508">
+        <state line="212" column="4" selection-start="5384" selection-end="5384" vertical-scroll-proportion="0.8569157">
           <folding>
-            <marker date="1396658022000" expanded="true" signature="202:336" placeholder="..." />
-            <marker date="1396658022000" expanded="true" signature="209:326" placeholder="..." />
-            <marker date="1396658022000" expanded="true" signature="1127:1188" placeholder="..." />
-            <marker date="1396658022000" expanded="true" signature="1279:1364" placeholder="..." />
-            <marker date="1396658022000" expanded="true" signature="1454:1535" placeholder="..." />
-            <marker date="1396658022000" expanded="true" signature="1624:1707" placeholder="..." />
-            <marker date="1396658022000" expanded="true" signature="1796:1886" placeholder="..." />
-            <marker date="1396658022000" expanded="true" signature="2024:2381" placeholder="..." />
-            <marker date="1396658022000" expanded="true" signature="2038:2113" placeholder="..." />
-            <marker date="1396658022000" expanded="true" signature="2127:2201" placeholder="..." />
-            <marker date="1396658022000" expanded="true" signature="2215:2277" placeholder="..." />
-            <marker date="1396658022000" expanded="true" signature="2291:2370" placeholder="..." />
+            <marker date="1396662208000" expanded="true" signature="202:336" placeholder="..." />
+            <marker date="1396662208000" expanded="true" signature="209:326" placeholder="..." />
+            <marker date="1396662208000" expanded="true" signature="1127:1188" placeholder="..." />
+            <marker date="1396662208000" expanded="true" signature="1279:1364" placeholder="..." />
+            <marker date="1396662208000" expanded="true" signature="1454:1535" placeholder="..." />
+            <marker date="1396662208000" expanded="true" signature="1624:1707" placeholder="..." />
+            <marker date="1396662208000" expanded="true" signature="1796:1886" placeholder="..." />
+            <marker date="1396662208000" expanded="true" signature="2024:2381" placeholder="..." />
+            <marker date="1396662208000" expanded="true" signature="2038:2113" placeholder="..." />
+            <marker date="1396662208000" expanded="true" signature="2127:2201" placeholder="..." />
+            <marker date="1396662208000" expanded="true" signature="2215:2277" placeholder="..." />
+            <marker date="1396662208000" expanded="true" signature="2291:2370" placeholder="..." />
           </folding>
         </state>
       </provider>

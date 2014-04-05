@@ -2,6 +2,7 @@
 
 /* Traitement Code */
 $Outils->verifierPOST('Code');
+$_POST['Code'] = $Outils->decrypt($_POST['Code']);
 
 $Exemplaires = [];
 for($i=1; $i<=3; $i++){

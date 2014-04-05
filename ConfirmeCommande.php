@@ -1,6 +1,7 @@
 <?php
 
 $Outils->verifierPOST('Code');
+$_POST['Code'] = $Outils->decrypt($_POST['Code']);
 
 /* Traitement des Supports associés à un film */
 
@@ -77,6 +78,7 @@ $BD->reserverCassettes($Exemplaires, $_POST['Code']);
 
 <form action="Commande.php" method="post">
     <input type="hidden" name="Pass" value="<?= $Outils->encrypt($_POST['Code']); ?>"/>
+    <input type="hidden" name="Nom" value="<?= $_POST['Nom']; ?>"/>
     <input type="submit" value="Revoir le choix"/>
 </form>
 
