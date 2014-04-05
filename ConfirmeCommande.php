@@ -5,7 +5,6 @@ $Outils->verifierPOST('Code');
 /* Traitement des Supports associés à un film */
 
 $Supports = [];
-$NoFilms = [];
 for($i=1; $i<=3; $i++)
 {
     if(
@@ -13,22 +12,20 @@ for($i=1; $i<=3; $i++)
         && !empty($_POST['NoFilm'.$i]) && !empty($_POST['Support'.$i]))
     {
         $Supports[$_POST['NoFilm'.$i]] =  $_POST['Support'.$i];
-        $NoFilms[] = $_POST['NoFilm'.$i];
     }
 }
 if(empty($Supports)) throw new CoreException(101,'Pas de supports');
 
 /* Trouver les cassettes disponibles */
 
-$data = $BD->cassettesDisponibles($NoFilms,$_POST['Code']);
+$data = $BD->cassettesDisponibles($Supports,$_POST['Code']);
 $films = $data['Films'];
 $Exemplaires = $data['Exemplaires'];
 unset($data);
-if(empty($films)) throw new CoreException(102,'Aucune cassette disponible.');
+if(empty($Exemplaires)) throw new CoreException(102,'Aucune cassette disponible.');
 
 /* Reserver les cassettes sélectionnées */
-
-$BD->reserverCassettes($Exemplaires, $_POST['Code'], $Outils->date());
+$BD->reserverCassettes($Exemplaires, $_POST['Code']);
 
 ?>
 <?= $Outils->banniere($include_file); ?>
@@ -38,15 +35,13 @@ $BD->reserverCassettes($Exemplaires, $_POST['Code'], $Outils->date());
 <form action="ExecuteCommande.php" method="post">
     <table>
         <tr>
-            <td>NoFilm</td>
             <td>Titre</td>
             <td>Realisateur</td>
             <td>Disponible</td>
         </tr>
         <?php $i=1; $nbDispo=0;
-        foreach($films as $film): ?>
+        foreach($films as $film):;?>
         <tr>
-            <td><?= $film['NoFilm'];?></td>
             <td><?= $film['Titre'];?></td>
             <td><?= $film['Realisateur'];?></td>
             <?php /* Film non disponible */ ?>
@@ -59,25 +54,17 @@ $BD->reserverCassettes($Exemplaires, $_POST['Code'], $Outils->date());
             <?php $nbDispo++;?>
             <td>
                 <span><?= $film['Exemplaires']['disponible'][0]; ?></span>
-                <SELECT name="<?= 'NoExemplaire'.$i; ?>">
-                <?php foreach($film['Exemplaires']['disponible'][0] as $NoExemplaire): ?>
-                    <OPTION value="<?= $NoExemplaire;?>"><?= $NoExemplaire;?></OPTION>
-                <?php endforeach; ?>
-                </SELECT>
+                <td><input type="checkbox" name="NoFilm<?= $i; ?>" value="<?= $film['NoFilm'];?>"</td>
             </td>
             <?php /* Support disponible */ ?>
             <?php else: ?>
             <?php $nbDispo++;?>
             <td>
                 <span>Oui</span>
-                <SELECT name="<?= 'NoExemplaire'.$i; ?>">
-                    <?php foreach($film['Exemplaires']['disponible'][$Supports[$film['NoFilm']]] as $NoExemplaire): ?>
-                        <OPTION value="<?= $NoExemplaire;?>"><?= $NoExemplaire;?></OPTION>
-                    <?php endforeach; ?>
-                </SELECT>
+                <td><input checked type="checkbox" name="NoFilm<?= $i; ?>" value="<?= $film['NoFilm'];?>"</td>
             </td>
             <?php endif; ?>
-            <input type="hidden" name="NoFilm<?= $i; ?>" value="<?= $film['NoFilm']; ?>"/>
+            <input type="hidden" name="NoExemplaire<?= $i; ?>" value="<?= $Exemplaires[$film['NoFilm']]; ?>"/>
         </tr>
         <?php $i++;
         endforeach;?>

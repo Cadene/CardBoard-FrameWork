@@ -13,7 +13,7 @@ if(empty($Exemplaires)) throw new CoreException();
 
 /* Récupération des Cassettes */
 $sql .= 'SELECT ';
-$sql .= 'f.NoFilm, f.Titre, f.Realisateur, c.NoExemplaire, c.Support ';
+$sql .= 'f.NoFilm, c.NoExemplaire, f.Titre, f.Realisateur, c.Support ';
 $sql .= 'FROM FILMS f, CASSETTES c ';
 $sql .= 'WHERE c.NoFilm = f.NoFilm AND (';
 $k=0;
@@ -30,7 +30,7 @@ while($row = $BD->fetch($rslt)){
 
 $BD->enleverReservations($_POST['Code']);
 
-$BD->emprunterCassettes($Exemplaires, $_POST['Code'], $Outils->date());
+$BD->emprunterCassettes($Exemplaires, $_POST['Code']);
 
 ?>
 <?= $Outils->banniere($include_file); ?>
@@ -40,9 +40,9 @@ $BD->emprunterCassettes($Exemplaires, $_POST['Code'], $Outils->date());
 <table>
     <tr>
         <td>NoFilm</td>
+        <td>NoExemplaire</td>
         <td>Titre</td>
         <td>Réalisateur</td>
-        <td>NoExemplaire</td>
         <td>Support</td>
     </tr>
     <?php foreach($Cassettes as $cassette): ?>

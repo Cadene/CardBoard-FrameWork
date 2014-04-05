@@ -165,12 +165,17 @@ class Outils {
     /**
      * Vérification de la validité des champs
      * Décryptage si field est Pass ou Code
+     * Gestion du COOKIE
      *
      * @param $field
      * @param $canEmpty
      * @throws CoreException
      */
     public function verifierPOST($field,$canEmpty=false) {
+        if(isset($_COOKIE['identite'])){
+            $_POST['Nom'] = $_COOKIE['identite'][0];
+            $_POST['Code'] = $this->decrypt($_COOKIE['identite'][1]);
+        }
         $error = 'Le champ '.$field.' de la variable globale $_POST ';
         if (!isset($_POST[$field]))
             throw new CoreException(0, $error.'n\'est pas déclarée.');
@@ -178,5 +183,6 @@ class Outils {
             throw new CoreException(1, $error.'est vide.');
         if($field == 'Pass' || $field == 'Code')
             $_POST[$field] = $this->decrypt($_POST[$field]);
+
     }
 }

@@ -111,7 +111,7 @@ class BD {
     public function verifierReservations($secondes=300)
     {
         return $this->enleverReservationsCond(
-            'UNIX_TIMESTAMP(DateEmpRes) < '.(time() - $secondes)
+            'UNIX_TIMESTAMP(DateEmpRes) + '.$secondes.' < NOW()'
         );
     }
 
@@ -173,7 +173,7 @@ class BD {
      * @param $Code
      * @return array
      */
-    public function cassettesDisponibles($NoFilms,$Code)
+    public function cassettesDisponibles($Supports,$Code)
     {
         /* Disponibles ou Empruntee*/
         $sql = 'SELECT ';
@@ -184,7 +184,7 @@ class BD {
         $sql .= ' AND (c.Statut = "disponible" OR c.Statut = "empruntee")';
         $sql .= ' AND (';
         $k=0;
-        foreach($NoFilms as $NoFilm){
+        foreach($Supports as $NoFilm=>$Support){
             $sql .= ($k==0 ? '' : ' OR ') . 'f.NoFilm = '.$NoFilm;
             $k++;
         }
@@ -202,7 +202,7 @@ class BD {
         $sql .= ' AND e.CodeAbonne = "'.$Code.'"';
         $sql .= ' AND (';
         $k=0;
-        foreach($NoFilms as $NoFilm){
+        foreach($Supports as $NoFilm=>$Support){
             $sql .= ($k==0 ? '' : ' OR ') . 'f.NoFilm = '.$NoFilm;
             $k++;
         }
@@ -221,10 +221,11 @@ class BD {
                     $films[$rows['NoFilm']]['Titre'] = $rows['Titre'];
                     $films[$rows['NoFilm']]['Realisateur'] = $rows['Realisateur'];
                 }
+                $films[$rows['NoFilm']]['Exemplaires'][$rows['Statut']][$rows['Support']][] = $rows['NoExemplaire'];
                 if($rows['Statut'] == "reservee")
                     $rows['Statut'] = "disponible";
-                $films[$rows['NoFilm']]['Exemplaires'][$rows['Statut']][$rows['Support']][] = $rows['NoExemplaire'];
-                $exemplaires[$rows['NoFilm']][] = $rows['NoExemplaire'];
+                if(!isset($exemplaires[$rows['NoFilm']]) && $Supports[$rows['NoFilm']] == $rows['Support'])
+                    $exemplaires[$rows['NoFilm']] = $rows['NoExemplaire'];
             }
         }
 
@@ -233,13 +234,14 @@ class BD {
         return $data;
     }
 
-    public function emprunterCassettes($Exemplaires, $Code, $date)
+    public function emprunterCassettes($Exemplaires, $Code)
     {
         foreach ($Exemplaires as $NoFilm=>$NoExemplaire) {
             $sql = 'UPDATE ';
             $sql .= 'CASSETTES ';
             $sql .= 'SET Statut = "empruntee" ';
-            $sql .= 'WHERE NoFilm = '.$NoFilm.' AND '.$NoExemplaire;
+            $sql .= 'WHERE NoFilm = '.$NoFilm;
+            $sql .= ' AND NoExemplaire = '.$NoExemplaire;
             $this->exec($sql);
         }
 
@@ -257,22 +259,22 @@ class BD {
         $sql .= 'VALUES ';
         $k=0;
         foreach($Exemplaires as $NoFilm=>$NoExemplaire){
-            $sql .= ($k==0 ? '' : ',') . '('.$NoFilm.','.$NoExemplaire.',"'.$Code.'","'.$date.'")';
+            $sql .= ($k==0 ? '' : ',') . '('.$NoFilm.','.$NoExemplaire.',"'.$Code.'",NOW())';
             $k++;
         }
+        $sql .= ' ON DUPLICATE KEY UPDATE DateEmpRes = VALUES(DateEmpRes)';
         $this->exec($sql);
     }
 
-    public function reserverCassettes($Exemplaires, $Code, $date)
+    public function reserverCassettes($Exemplaires, $Code)
     {
         foreach ($Exemplaires as $NoFilm=>$NoExemplaire) {
-            foreach($NoExemplaire as $NoE){
-                $sql = 'UPDATE ';
-                $sql .= 'CASSETTES ';
-                $sql .= 'SET Statut = "reservee" ';
-                $sql .= 'WHERE NoFilm = '.$NoFilm.' AND '.$NoE;
-                $this->exec($sql);
-            }
+            $sql = 'UPDATE ';
+            $sql .= 'CASSETTES ';
+            $sql .= 'SET Statut = "reservee" ';
+            $sql .= 'WHERE NoFilm = '.$NoFilm;
+            $sql .= ' AND NoExemplaire = '.$NoExemplaire;
+            $this->exec($sql);
         }
         /* Création des emprunts */
         $sql = 'INSERT ';
@@ -281,11 +283,10 @@ class BD {
         $sql .= 'VALUES ';
         $k=0;
         foreach($Exemplaires as $NoFilm=>$NoExemplaire){
-            foreach($NoExemplaire as $NoE){
-                $sql .= ($k==0 ? '' : ',') . '('.$NoFilm.','.$NoE.',"'.$Code.'","'.$date.'")';
-                $k++;
-            }
+            $sql .= ($k==0 ? '' : ',') . '('.$NoFilm.','.$NoExemplaire.',"'.$Code.'",NOW())';
+            $k++;
         }
+        $sql .= ' ON DUPLICATE KEY UPDATE DateEmpRes = VALUES(DateEmpRes)';
         $this->exec($sql);
 
     }
