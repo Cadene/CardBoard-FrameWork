@@ -210,5 +210,11 @@ class Outils {
             );
         }
     }
-    
+
+
+    public function supportContraire($support){
+        if($support == 'VHS')
+            return 'DVD';
+        return 'VHS';
+    }
 }

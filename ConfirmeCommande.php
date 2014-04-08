@@ -23,10 +23,11 @@ $data = $BD->cassettesDisponibles($Supports,$_POST['Code']);
 $films = $data['Films'];
 $Exemplaires = $data['Exemplaires'];
 unset($data);
-if(empty($Exemplaires)) throw new CoreException(102,'Aucune cassette disponible.');
+//if(empty($Exemplaires)) throw new CoreException(102,'Aucune cassette disponible.');
 
 /* Reserver les cassettes sélectionnées */
-$BD->reserverCassettes($Exemplaires, $_POST['Code']);
+if(!empty($Exemplaires))
+    $BD->reserverCassettes($Exemplaires, $_POST['Code']);
 
 ?>
 <?= $Outils->banniere($include_file); ?>
@@ -53,9 +54,11 @@ $BD->reserverCassettes($Exemplaires, $_POST['Code']);
             <?php /* Support non disponible */ ?>
             <?php elseif (!isset($film['Exemplaires']['disponible'][$Supports[$film['NoFilm']]])): ?>
             <?php $nbDispo++;?>
-            <td>
-                <span><?= $film['Exemplaires']['disponible'][0]; ?></span>
-                <td><input type="checkbox" name="NoFilm<?= $i; ?>" value="<?= $film['NoFilm'];?>"</td>
+            <td><?php $contraire = $Outils->supportContraire($Supports[$film['NoFilm']]); ?>
+                <span><?= $contraire;?></span>
+                <td><input type="checkbox" name="NoFilm<?= $i; ?>" value="<?= $film['NoFilm'];?>"/></td>
+                <?php $value = $film['Exemplaires']['disponible'][$contraire][0];?>
+                <input type="hidden" name="NoExemplaire<?= $i; ?>" value="<?= $value; ?>"/>
             </td>
             <?php /* Support disponible */ ?>
             <?php else: ?>
@@ -63,9 +66,9 @@ $BD->reserverCassettes($Exemplaires, $_POST['Code']);
             <td>
                 <span>Oui</span>
                 <td><input checked type="checkbox" name="NoFilm<?= $i; ?>" value="<?= $film['NoFilm'];?>"</td>
+                <input type="hidden" name="NoExemplaire<?= $i; ?>" value="<?= $Exemplaires[$film['NoFilm']]; ?>"/>
             </td>
             <?php endif; ?>
-            <input type="hidden" name="NoExemplaire<?= $i; ?>" value="<?= $Exemplaires[$film['NoFilm']]; ?>"/>
         </tr>
         <?php $i++;
         endforeach;?>

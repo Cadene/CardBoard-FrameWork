@@ -36,6 +36,8 @@ if(!empty($_POST['mots'])){
 
 $sql .= ' GROUP BY f.NoFilm';
 
+echo $sql;
+
 $films = [];
 $rslt = $BD->exec($sql);
 while($row = $BD->fetch($rslt))

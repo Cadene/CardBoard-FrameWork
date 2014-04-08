@@ -98,6 +98,7 @@ class BD {
         if($abo['Nom'] != $Nom){
             throw new CoreException(101,'Le Nom associé au Code n\'est pas le même.');
         }
+        return $abo;
     }
 
 
@@ -175,13 +176,13 @@ class BD {
      */
     public function cassettesDisponibles($Supports,$Code)
     {
-        /* Disponibles ou Empruntee*/
+        /* Disponibles */
         $sql = 'SELECT ';
         $sql .= 'f.NoFilm, f.Titre, f.Realisateur, ';
         $sql .= 'c.NoExemplaire, c.Support, c.Statut ';
         $sql .= 'FROM FILMS f, CASSETTES c ';
         $sql .= 'WHERE c.NoFilm = f.NoFilm';
-        $sql .= ' AND (c.Statut = "disponible" OR c.Statut = "empruntee")';
+        $sql .= ' AND c.Statut = "disponible"';
         $sql .= ' AND (';
         $k=0;
         foreach($Supports as $NoFilm=>$Support){
@@ -231,6 +232,7 @@ class BD {
 
         $data['Films'] = $films;
         $data['Exemplaires'] = $exemplaires;
+        //print_r($data);
         return $data;
     }
 
