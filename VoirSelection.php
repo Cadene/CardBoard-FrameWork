@@ -2,7 +2,9 @@
 
 if(!isset($_COOKIE['selection']) || $_COOKIE['selection'][0] <= 0)
 {
-    echo '<div>Aucun film sélectionné</div>';
+    echo '<div class="alert alert-warning alert-dismissable">
+  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+  <strong>Attention !</strong> Vous n\'avez sélectionné aucun film dans votre panier.</div>';
 }
 else
 {
@@ -31,7 +33,7 @@ else
 
 ?>
 <form action="?p=<?= $include_file;?>&pp=SuppSelection" method="post">
-    <table>
+    <table class="table table-hover">
         <tr>
             <td>NoFilm</td>
             <td>Titre</td>
@@ -49,9 +51,14 @@ else
             <?php $i++;?>
         <?php endforeach;?>
     </table>
-    <input type="submit" value="Supprimer"/>
+    <center><button type="submit" class="btn btn-default">Supprimer</button></center>
     <input type="hidden" name="nb_films" value="<?= $i;?>"/>
 </form>
-
 <?php
+
+    echo Outils::formPanier('Accueil','ViderSelection','Réinitialiser votre panier.');
+
+
 }
+
+

@@ -1,6 +1,6 @@
-<?php echo $Outils->banniere($include_file);?>
 
-<h2>Commande de cassettes</h2>
+
+<h4>Commande de cassettes</h4>
 
 <form action="?p=Commande" method="post">
     <input type="text" name="Nom" placeholder="Nom"/>

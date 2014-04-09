@@ -15,19 +15,31 @@ if(!isset($_COOKIE['identite'])){
 ?>
 
 
-    <h1>VideoExpress <small>© Rémi Cadène</small></h1>
+<div class="list-group">
+    <a href="<?= $href['AcceuilDescriptif']; ?>" class="list-group-item">
+        <h4 class="list-group-item-heading">Descriptif d'un film</h4>
+        <p class="list-group-item-text">Obtenez le synopsis, la liste des acteurs,
+            le nom du réalisateur et bien d'autres informations en recherchant un film grace à son identifiant.</p>
+    </a>
+</div>
+<div class="list-group">
+    <a href="<?= $href['AccueilRecherche']; ?>" class="list-group-item">
+        <h4 class="list-group-item-heading">Recherche de films</h4>
+        <p class="list-group-item-text">Rechercher des films grace à des mots clés et autres.</p>
+    </a>
+</div>
+<div class="list-group">
+    <a href="<?= $href['IdentificationC']; ?>" class="list-group-item">
+        <h4 class="list-group-item-heading">Commande de cassettes</h4>
+        <p class="list-group-item-text">Choisissez vos films au préalable puis commandez en jusqu'à trois en même temps.</p>
+    </a>
+</div>
+<div class="list-group">
+    <a href="<?= $href['IdentificationD']; ?>" class="list-group-item">
+        <h4 class="list-group-item-heading">Liste des cassettes détenues</h4>
+        <p class="list-group-item-text">Obtenez la liste de vos films et cassettes empruntés.</p>
+    </a>
+</div>
 
-    <div>
-        <div>
-            <a href="<?= $href['AcceuilDescriptif']; ?>">Descriptif d'un film</a>
-        </div>
-        <div>
-            <a href="<?= $href['AcceuilRecherche']; ?>">Recherche de films</a>
-        </div>
-        <div>
-            <a href="<?= $href['IdentificationC']; ?>">Commande de cassettes</a>
-        </div>
-        <div>
-            <a href="<?= $href['IdentificationD']; ?>">Liste des cassettes détenues</a>
-        </div>
-    </div>
+
+

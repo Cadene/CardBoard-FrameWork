@@ -2,7 +2,6 @@
 
 /* Traitement Code */
 $Outils->verifierPOST('Code');
-$_POST['Code'] = $Outils->decrypt($_POST['Code']);
 
 $Exemplaires = [];
 for($i=1; $i<=3; $i++){
@@ -10,7 +9,7 @@ for($i=1; $i<=3; $i++){
         $Exemplaires[$_POST['NoFilm'.$i]] =  $_POST['NoExemplaire'.$i];
     }
 }
-if(empty($Exemplaires)) throw new CoreException();
+if(empty($Exemplaires)) throw new CoreException('Pas d\'exemplaire disponible.');
 
 /* Récupération des Cassettes */
 $sql .= 'SELECT ';
@@ -34,11 +33,10 @@ $BD->enleverReservations($_POST['Code']);
 $BD->emprunterCassettes($Exemplaires, $_POST['Code']);
 
 ?>
-<?= $Outils->banniere($include_file); ?>
 
-<h2>Récapitulatif de votre commande</h2>
+<h4>Récapitulatif de votre commande</h4>
 
-<table>
+<table class="table table-hover">
     <tr>
         <td>NoFilm</td>
         <td>NoExemplaire</td>

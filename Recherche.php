@@ -45,7 +45,6 @@ while($row = $BD->fetch($rslt))
 
 
 ?>
-<?= $Outils->banniere($include_file);?>
 
     <h2>Films trouvés</h2>
 
@@ -55,7 +54,7 @@ while($row = $BD->fetch($rslt))
     <?php
         $tds = array('NoFilm','Titre','Nationalite','Realisateur','Couleur','Annee','Genre','Duree','Synopsis');
     ?>
-    <table>
+    <table class="table table-hover">
         <tr>
         <?php foreach($tds as $td): ?>
             <td><?= $td; ?></td>

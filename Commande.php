@@ -3,8 +3,6 @@ $abo = $Outils->verifierIdentite($BD);
 $abo['NbEmpruntables'] = 3 - $abo['NbCassettes'];
 
 ?>
-<?= $Outils->banniere($include_file);?>
-
     <h2>Commander des films</h2>
 
     <div>

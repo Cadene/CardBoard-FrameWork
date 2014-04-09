@@ -27,4 +27,8 @@ else
 
 ?>
 
-<div>Film ajouté</div>
+    echo '<div class="alert alert-success alert-dismissable">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    <strong>Attention !</strong> Vous n\'avez sélectionné aucun film dans votre panier.</div>';
+
+<?= $Outils->formPanier($include_file,'VoirSelection','Voir le contenu du panier');

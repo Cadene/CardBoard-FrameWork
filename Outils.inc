@@ -9,18 +9,17 @@ class Outils {
      * @return string
      */
     public function header(){
-    return '
-<!doctype html>
-<html lang="fr">
-<head>
-    <meta charset="utf-8">
-    <title>VideoEXPRESS</title>
-    <link rel="stylesheet" href="css/styles.css">
-</head>
-
-<body>
-
-';
+        $s = '';
+        $s .= '<!doctype html>'."\n";
+        $s .= '<html lang="fr">'."\n";
+        $s .= '<head>'."\n";
+        $s .= '<meta charset="utf-8">'."\n";
+        $s .= '<title>VideoEXPRESS</title>'."\n";
+        $s .= '<link rel="stylesheet" href="css/bootstrap.min.css">'."\n";
+        $s .= '<link href="css/navbar-fixed-top.css" rel="stylesheet">'."\n";
+        $s .= '</head>'."\n\n";
+        $s .= '<body>'."\n";
+        return $s;
     }
 
     /**
@@ -34,8 +33,27 @@ class Outils {
      * @return string
      */
     public function banniere($current,$page='VideoExpress',$auteurs='Rémi Cadène'){
-        $s = "\t".'<h1>'.$page.' <small>© '.$auteurs.'</small></h1>'."\n";
-        $s .= $this->menu($current);
+        $s = '<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+                <div class="container">
+                <div class="navbar-header">
+                  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                  </button>
+                  <a class="navbar-brand" href="#">'.$page.' <small>© '.$auteurs.'</small></a>
+                 </div>
+                 <div class="navbar-collapse collapse">';
+        if($current != 'Accueil')
+            $s .= $this->menu($current);
+        $s .= '<ul class="nav navbar-nav navbar-right">
+                <li><a href="?admin">Admin</a></li>
+              </ul>
+              </div><!--/.nav-collapse -->
+          </div>
+        </div>';
+
         return $s;
     }
 
@@ -47,7 +65,7 @@ class Outils {
 
     public function menu($current)
     {
-        $href['AcceuilDescriptif'] = "?p=AccueilDescriptif";
+        $href['AccueilDescriptif'] = "?p=AccueilDescriptif";
         $href['AccueilRecherche'] = "?p=AccueilRecherche";
 
         if(!isset($_COOKIE['identite'])){
@@ -59,34 +77,33 @@ class Outils {
             $href['IdentificationD'] = "?p=Detenues";
         }
 
-        $s = '';
-        $s .= '<div id="menu">'."\n";
+        $s = '<ul class="nav navbar-nav">';
         if($current != 'Accueil'){
-            $s .= '<div>'."\n";
+            $s .= '<li>'."\n";
             $s .=   '<a href="?p=Accueil">Accueil</a>'."\n";
-            $s .= '</div>'."\n";
+            $s .= '</li>'."\n";
         }
-        if($current != '?p=AccueilDescriptif'){
-            $s .= '<div>'."\n";
-            $s .=   '<a href="'.$href['AcceuilDescriptif'].'">Descriptif d\'un film</a>'."\n";
-            $s .= '</div>'."\n";
+        if($current != 'AccueilDescriptif'){
+            $s .= '<li>'."\n";
+            $s .=   '<a href="'.$href['AccueilDescriptif'].'">Trouver</a>'."\n";
+            $s .= '</li>'."\n";
         }
         if($current != 'AccueilRecherche'){
-            $s .= '<div>'."\n";
-            $s .=   '<a href="'.$href['AccueilRecherche'].'">Recherche de films</a>'."\n";
-            $s .= '</div>'."\n";
+            $s .= '<li>'."\n";
+            $s .=   '<a href="'.$href['AccueilRecherche'].'">Rechercher</a>'."\n";
+            $s .= '</li>'."\n";
         }
         if($current != 'IdentificationC'){
-            $s .= '<div>'."\n";
-            $s .=   '<a href="'.$href['IdentificationC'].'">Commande de cassettes</a>'."\n";
-            $s .= '</div>'."\n";
+            $s .= '<li>'."\n";
+            $s .=   '<a href="'.$href['IdentificationC'].'">Commander</a>'."\n";
+            $s .= '</li>'."\n";
         }
         if($current != 'IdentificationD'){
-            $s .= '<div>'."\n";
-            $s .=   '<a href="'.$href['IdentificationD'].'">Liste des cassettes détenues</a>'."\n";
-            $s .= '</div>'."\n";
+            $s .= '<li>'."\n";
+            $s .=   '<a href="'.$href['IdentificationD'].'">Vos Cassettes</a>'."\n";
+            $s .= '</li>'."\n";
         }
-        $s .= '</div>'."\n";
+        $s .= '</ul>'."\n";
         return $s;
     }
 
@@ -117,8 +134,10 @@ class Outils {
      */
 
     public function footer(){
-        $s = "\n".'</body>'."\n";
-        $s.= '</html>'."\n";
+        $s = '<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+               <script src="js/bootstrap.min.js"></script>';
+        $s .= "\n".'</body>'."\n";
+        $s .= '</html>'."\n";
         return $s;
     }
 
@@ -243,6 +262,16 @@ class Outils {
         return 'VHS';
     }
 
+    public function formPanier($p,$pp,$value,$hidden=null){
+        $s = '';
+        $s .= '<form action="?p='.$p.'&pp='.$pp.'" method="post">'."\n";
+        $s .= '<button type="submit" class="btn btn-default btn-block">'.$value.'</button>'."\n";
+        if($hidden != null)
+            $s .= '<input type="hidden" name="'.$hidden['name'].'" value="'.$hidden['value'].'"/>'."\n";
+        $s .= '</form>'."\n";
+        return $s;
+    }
+
     public function form($p,$pp,$value,$hidden=null){
         $s = '';
         $s .= '<form action="?p='.$p.'&pp='.$pp.'" method="post">'."\n";
@@ -269,4 +298,7 @@ class Outils {
     public function getSelection($i){
         return $_COOKIE['selection'][$i];
     }
+
+
+
 }

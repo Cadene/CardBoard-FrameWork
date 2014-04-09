@@ -1,5 +1,6 @@
 <?php
 
+
 if( !isset($_POST['NoFilm']) || empty($_POST['NoFilm']) ){
     throw new CoreException(101,"Numéro du film incorrecte.");
 }else{
@@ -16,6 +17,7 @@ if( !isset($_POST['NoFilm']) || empty($_POST['NoFilm']) ){
     if($row = $BD->fetch($rslt))
         $film = $row;
 
+
     // Récupération des acteurs du film
     $sql = 'SELECT ';
     $sql .= 'a.Acteur ';
@@ -28,14 +30,13 @@ if( !isset($_POST['NoFilm']) || empty($_POST['NoFilm']) ){
         $acteurs[] = $row;
 }
 ?>
-<?= $Outils->banniere($include_file);?>
 
-<h2>Films trouvés</h2>
+<h4>Films trouvés</h4>
 
 <?php if(empty($film)):?>
     <div>Désolé, aucun film ne correspond à votre recherche. Voulez-vous <a href="AccueilDescriptif.php">réessayez</a> ?</div>
 <?php else: ?>
-    <table>
+    <table class="table table-hover">
         <tr>
             <td>NoFilm</td>
             <td>Titre</td>

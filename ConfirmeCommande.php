@@ -30,12 +30,11 @@ if(!empty($Exemplaires))
     $BD->reserverCassettes($Exemplaires, $_POST['Code']);
 
 ?>
-<?= $Outils->banniere($include_file); ?>
 
 <h2>Confirmation de votre commande</h2>
 
-<form action="p=ExecuteCommande" method="post">
-    <table>
+<form action="?p=ExecuteCommande" method="post">
+    <table class="table table-hover">
         <tr>
             <td>Titre</td>
             <td>Realisateur</td>
@@ -56,7 +55,7 @@ if(!empty($Exemplaires))
             <?php $nbDispo++;?>
             <td><?php $contraire = $Outils->supportContraire($Supports[$film['NoFilm']]); ?>
                 <span><?= $contraire;?></span>
-                <td><input type="checkbox" name="NoFilm<?= $i; ?>" value="<?= $film['NoFilm'];?>"/></td>
+                <input type="checkbox" name="NoFilm<?= $i; ?>" value="<?= $film['NoFilm'];?>"/>
                 <?php $value = $film['Exemplaires']['disponible'][$contraire][0];?>
                 <input type="hidden" name="NoExemplaire<?= $i; ?>" value="<?= $value; ?>"/>
             </td>
@@ -65,7 +64,7 @@ if(!empty($Exemplaires))
             <?php $nbDispo++;?>
             <td>
                 <span>Oui</span>
-                <td><input checked type="checkbox" name="NoFilm<?= $i; ?>" value="<?= $film['NoFilm'];?>"</td>
+                <input checked type="checkbox" name="NoFilm<?= $i; ?>" value="<?= $film['NoFilm'];?>"/>
                 <input type="hidden" name="NoExemplaire<?= $i; ?>" value="<?= $Exemplaires[$film['NoFilm']]; ?>"/>
             </td>
             <?php endif; ?>
@@ -79,7 +78,7 @@ if(!empty($Exemplaires))
     <?php endif; ?>
 </form>
 
-<form action="Commande.php" method="post">
+<form action="?p=Commande" method="post">
     <input type="hidden" name="Pass" value="<?= $Outils->encrypt($_POST['Code']); ?>"/>
     <input type="hidden" name="Nom" value="<?= $_POST['Nom']; ?>"/>
     <input type="submit" value="Revoir le choix"/>

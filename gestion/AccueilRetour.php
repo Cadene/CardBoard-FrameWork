@@ -1,4 +1,3 @@
-<?= $Outils->admin_banniere();?>
 
 <h2>Accueil Retour</h2>
 

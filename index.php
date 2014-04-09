@@ -24,6 +24,13 @@
         $include_panier = $_GET['pp'];
     }
 
+    if(isset($_GET['admin'])){
+        if(!file_exists('gestion/'.$_GET['admin'].'.php'))
+            $include_admin = 'index';
+        else
+            $include_admin = $_GET['admin'];
+    }
+
     /**
      * Initialisation des objets des fichiers .inc,
      * utilisables aussi par les pages incluses
@@ -51,15 +58,50 @@
 
     echo $Outils->header();
 
+    echo  $Outils->banniere($include_file);
+
+    echo '<div class="container">';
+
     try
     {
         $BD->connect();
 
         $BD->verifierReservations(300);
-        //setcookie("identite", "", time()-3600);
-        print_r($_COOKIE);
-        include($include_file.'.php');
-        include($include_panier.'.php');
+
+        if(isset($include_admin))
+        {
+            echo $Outils->admin_banniere();
+            echo '<div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Cadre de l\'administration</h3>
+                </div>
+                <div class="panel-body">';
+            include('gestion/'.$include_admin.'.php');
+            echo '</div>
+             </div>';
+        }
+        else
+        {
+
+            echo '<div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Cadre des fonctions principales</h3>
+                </div>
+                <div class="panel-body">';
+            include($include_file.'.php');
+            echo '</div>
+             </div>';
+
+
+            echo '<div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Cadre du panier de l\'utilisateur</h3>
+                </div>
+                <div class="panel-body">';
+            include($include_panier.'.php');
+            echo '</div>
+             </div>';
+        }
 
         $BD->close();
     }
@@ -70,6 +112,8 @@
         echo $e->toHTML();
         echo "\n";
     }
+
+    echo '</div> <!-- /container -->';
 
     echo $Outils->footer();
 

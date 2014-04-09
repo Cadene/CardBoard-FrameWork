@@ -16,14 +16,13 @@ while($row = $BD->fetch($rslt))
     $films[] = $row;
 
 ?>
-<?= $Outils->banniere($include_file);?>
 
-<h2>Films trouvés</h2>
+<h4>Films trouvés</h4>
 
 <?php if(empty($films)):?>
     <div>Vous n'avez emprunté aucun film en ce moment. En <a href="IdentificationC.php".php">commander</a> ?</div>
 <?php else: ?>
-    <table>
+    <table class="table table-hover">
         <tr>
             <td>NoFilm</td>
             <td>NoExemplaire</td>
