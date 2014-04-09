@@ -34,7 +34,7 @@ if(!empty($Exemplaires))
 
 <h2>Confirmation de votre commande</h2>
 
-<form action="ExecuteCommande.php" method="post">
+<form action="p=ExecuteCommande" method="post">
     <table>
         <tr>
             <td>Titre</td>

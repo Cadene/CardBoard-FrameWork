@@ -47,40 +47,46 @@ class Outils {
 
     public function menu($current)
     {
-        $s = '
-    <div id="menu">';
-        if($current != 'Accueil.php'){
-        $s .= '
-        <div>
-            <a href="Accueil.php">Accueil</a>
-        </div>';
+        $href['AcceuilDescriptif'] = "?p=AccueilDescriptif";
+        $href['AccueilRecherche'] = "?p=AccueilRecherche";
+
+        if(!isset($_COOKIE['identite'])){
+            $href['IdentificationC'] = "?p=IdentificationC";
+            $href['IdentificationD'] = "?p=IdentificationD";
+        }else{
+
+            $href['IdentificationC'] = "?p=Commande";
+            $href['IdentificationD'] = "?p=Detenues";
         }
-        if($current != 'AccueilDescriptif.php'){
-        $s .= '
-        <div>
-            <a href="AccueilDescriptif.php">Descriptif d\'un film</a>
-        </div>';
+
+        $s = '';
+        $s .= '<div id="menu">'."\n";
+        if($current != 'Accueil'){
+            $s .= '<div>'."\n";
+            $s .=   '<a href="?p=Accueil">Accueil</a>'."\n";
+            $s .= '</div>'."\n";
         }
-        if($current != 'AccueilRecherche.php'){
-        $s .= '
-        <div>
-            <a href="AccueilRecherche.php">Recherche de films</a>
-        </div>';
+        if($current != '?p=AccueilDescriptif'){
+            $s .= '<div>'."\n";
+            $s .=   '<a href="'.$href['AcceuilDescriptif'].'">Descriptif d\'un film</a>'."\n";
+            $s .= '</div>'."\n";
         }
-        if($current != 'IdentificationC.php'){
-        $s .= '
-        <div>
-            <a href="IdentificationC.php">Commande de cassettes</a>
-        </div>';
+        if($current != 'AccueilRecherche'){
+            $s .= '<div>'."\n";
+            $s .=   '<a href="'.$href['AccueilRecherche'].'">Recherche de films</a>'."\n";
+            $s .= '</div>'."\n";
         }
-        if($current != 'IdentificationD.php'){
-        $s .= '
-        <div>
-            <a href="IdentificationD.php">Liste des cassettes détenues</a>
-        </div>';
+        if($current != 'IdentificationC'){
+            $s .= '<div>'."\n";
+            $s .=   '<a href="'.$href['IdentificationC'].'">Commande de cassettes</a>'."\n";
+            $s .= '</div>'."\n";
         }
-        $s .= '
-    </div>';
+        if($current != 'IdentificationD'){
+            $s .= '<div>'."\n";
+            $s .=   '<a href="'.$href['IdentificationD'].'">Liste des cassettes détenues</a>'."\n";
+            $s .= '</div>'."\n";
+        }
+        $s .= '</div>'."\n";
         return $s;
     }
 
@@ -97,7 +103,7 @@ class Outils {
             <a href="#">Radier des abonnés</a>
         </div>
         <div>
-            <a href="AccueilRetour.php">Retour de cassettes</a>
+            <a href="?p=AccueilRetour">Retour de cassettes</a>
         </div>
     </div>';
     }
@@ -200,21 +206,67 @@ class Outils {
      */
     public function creerCOOKIE($Nom,$Code){
         if(!isset($_COOKIE['identite'])){
-            setcookie(
-                'identite',
-                array(
-                    $Nom,
-                    $this->encrypt($Code)
-                ),
-                0
-            );
+            setcookie('identite[0]',$Nom,time()+3600);
+            setcookie('identite[1]',$this->encrypt($Code),time()+3600);
         }
     }
 
+    public function getCOOKIE(){
+        if(isset($_COOKIE['identite'])){
+            $data['Nom'] = $_COOKIE['identite'][0];
+            $data['Code'] = $this->decrypt($_COOKIE['identite'][1]);
+            return $data;
+        }
+        return false;
+    }
+
+    public function verifierCOOKIE(){
+        $identite = $this->getCOOKIE();
+        if($identite === false){
+            foreach(array('Nom','Code') as $field) { $this->verifierPOST($field); }
+        }else{
+            $_POST['Nom'] = $identite['Nom'];
+            $_POST['Code'] = $identite['Code'];
+        }
+    }
+
+    public function verifierIdentite($BD){
+        $this->verifierCOOKIE();
+        $abo = $BD->verifierAbonne($_POST['Nom'],$_POST['Code']);
+        $this->creerCOOKIE($_POST['Nom'],$_POST['Code']);
+        return $abo;
+    }
 
     public function supportContraire($support){
         if($support == 'VHS')
             return 'DVD';
         return 'VHS';
+    }
+
+    public function form($p,$pp,$value,$hidden=null){
+        $s = '';
+        $s .= '<form action="?p='.$p.'&pp='.$pp.'" method="post">'."\n";
+        $s .= '<input type="submit" value="'.$value.'"/>'."\n";
+        if($hidden != null)
+            $s .= '<input type="hidden" name="'.$hidden['name'].'" value="'.$hidden['value'].'"/>'."\n";
+        $s .= '</form>'."\n";
+        return $s;
+    }
+
+    public function getPanierNoFilms(){
+        $nb_films = $_COOKIE['selection'][0];
+        for($i=1; $i<=$nb_films; $i++){
+            $NoFilms[] = $_COOKIE['selection'][$i];
+        }
+        return $NoFilms;
+    }
+
+    public function setSelection($i,$value){
+        $time = time()+60*60*24*30;
+        setcookie('selection['.$i.']',$value,$time);
+    }
+
+    public function getSelection($i){
+        return $_COOKIE['selection'][$i];
     }
 }

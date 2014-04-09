@@ -8,35 +8,20 @@
      * Identification du fichier à inclure en fonction de l'url
      */
 
-    $url = "http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
-    $parse_url = parse_url($url);
-
-    if($parse_url['path'] == '/')
-    {
-        $include_file = 'Accueil.php';
+    if(!isset($_GET['p'])){
+        $include_file = 'Accueil';
+    }else if(!file_exists($_GET['p'].'.php')){
+        $include_file = 'NotFound';
+    }else{
+        $include_file = $_GET['p'];
     }
-    else
-    {
-        $explode_url = explode('/',$parse_url['path']);
-        $include_file = $explode_url[1];
 
-        if(strtolower($include_file) == 'gestion')
-        {
-            if(!isset($explode_url[2]) || empty($explode_url[2]))
-            {
-                $include_file = 'gestion/index.php';
-            }
-            else
-            {
-                $include_file = 'gestion/'.$explode_url[2];
-            }
-        }
-
-        if(
-            !file_exists($include_file) || isset(explode('.inc',$include_file)[1])
-        ){
-            $include_file = 'NotFound.php';
-        }
+    if(!isset($_GET['pp'])){
+        $include_panier = 'Panier';
+    }else if(!file_exists($_GET['pp'].'.php')){
+        $include_panier = 'NotFound';
+    }else{
+        $include_panier = $_GET['pp'];
     }
 
     /**
@@ -70,10 +55,11 @@
     {
         $BD->connect();
 
-        //echo '<div>'.$BD->verifierReservation(1).' réservations expirées</div>';
         $BD->verifierReservations(300);
-
-        include($include_file);
+        //setcookie("identite", "", time()-3600);
+        print_r($_COOKIE);
+        include($include_file.'.php');
+        include($include_panier.'.php');
 
         $BD->close();
     }

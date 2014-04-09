@@ -1,15 +1,10 @@
 <?php
 
-foreach(array('Nom','Code') as $field) { $Outils->verifierPOST($field); }
-
-$BD->verifierAbonne($_POST['Nom'],$_POST['Code']);
-
-//$Outils->creerCOOKIE($_POST['Nom'],$_POST['Code']);
+$Outils->verifierIdentite($BD);
 
 // Récupération des Videos possédées
 
-$sql = '';
-$sql .= 'SELECT ';
+$sql = 'SELECT ';
 $sql .= 'e.NoFilm, e.NoExemplaire, e.DateEmpRes, f.Titre, f.Realisateur  ';
 $sql .= 'FROM EMPRES e, FILMS f ';
 $sql .= 'WHERE e.CodeAbonne = "'.$_POST['Code'].'"';

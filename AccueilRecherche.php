@@ -11,7 +11,7 @@ $acteurs = $BD->findOne('Acteur','ACTEURS');
 
     <h2>Recherche de films</h2>
 
-    <form action="Recherche.php" method="post">
+    <form action="?p=Recherche" method="post">
         <input type="text" name="mots" placeholder="Mots composants le titre"/>
         <SELECT name="support">
             <OPTION value="-1">Indifférent</OPTION>

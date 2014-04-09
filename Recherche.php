@@ -60,12 +60,16 @@ while($row = $BD->fetch($rslt))
         <?php foreach($tds as $td): ?>
             <td><?= $td; ?></td>
         <?php endforeach; ?>
+            <td>Panier</td>
         </tr>
     <?php foreach($films as $film): ?>
         <tr>
             <?php foreach($tds as $td): ?>
             <td><?= $film[$td] ;?></td>
             <?php endforeach;?>
+            <td><?= $Outils->form('Accueil','AjoutSelection','Ajouter',array(
+                    'name' => 'NoFilm', 'value' => $film['NoFilm']
+                ));?></td>
         </tr>
     <?php endforeach; ?>
     </table>

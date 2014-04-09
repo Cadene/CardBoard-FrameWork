@@ -1,12 +1,5 @@
 <?php
-
-
-foreach(array('Nom','Code') as $field) { $Outils->verifierPOST($field); }
-
-$abo = $BD->verifierAbonne($_POST['Nom'],$_POST['Code']);
-
-$Outils->creerCOOKIE($_POST['Nom'],$_POST['Code']);
-
+$abo = $Outils->verifierIdentite($BD);
 $abo['NbEmpruntables'] = 3 - $abo['NbCassettes'];
 
 ?>
@@ -23,7 +16,7 @@ $abo['NbEmpruntables'] = 3 - $abo['NbCassettes'];
     </div>
 
     <?php if($abo['NbEmpruntables']>0): ?>
-    <form action="ConfirmeCommande.php" method="post">
+    <form action="?p=ConfirmeCommande" method="post">
         <table>
             <?php for($i=1; $i<=$abo['NbEmpruntables']; $i++): ?>
             <tr>

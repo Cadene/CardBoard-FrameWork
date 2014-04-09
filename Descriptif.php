@@ -46,6 +46,7 @@ if( !isset($_POST['NoFilm']) || empty($_POST['NoFilm']) ){
             <td>Genre</td>
             <td>Duree</td>
             <td>Acteurs</td>
+            <td>Panier</td>
         </tr>
         <tr>
             <?php foreach($film as $f): ?>
@@ -54,6 +55,9 @@ if( !isset($_POST['NoFilm']) || empty($_POST['NoFilm']) ){
             <td><?php foreach($acteurs as $k=>$acteur):
                 echo ($k!=0 ? ', ' : '').current($acteur);
             endforeach;?></td>
+            <td><?= $Outils->form($include_file,'AjoutSelection','Ajouter',array(
+                    'name' => 'NoFilm', 'value' => $film['NoFilm']
+                ));?></td>
         </tr>
     </table>
 
